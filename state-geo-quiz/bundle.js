@@ -50412,11 +50412,12 @@
 	
 	exports.messages = messages;
 	var webservice_ext = '.json';
+	var deployment_context = '/state-geo-quiz';
 	
 	var webservice_url = {
-		states: "/states" + webservice_ext,
-		adjacentStates: "/adjacentStates" + webservice_ext,
-		users: "/users" + webservice_ext
+		states: deployment_context + "/states" + webservice_ext,
+		adjacentStates: deployment_context + "/adjacentStates" + webservice_ext,
+		users: deployment_context + "/users" + webservice_ext
 	};
 	exports.webservice_url = webservice_url;
 
