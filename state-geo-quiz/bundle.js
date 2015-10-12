@@ -93,13 +93,15 @@
 	
 	var _componentsCapitalQuizCapitalQuiz = __webpack_require__(36);
 	
-	var _componentsLoginLogin = __webpack_require__(42);
+	var _componentsStateDropdownStateDropdown = __webpack_require__(42);
 	
-	var _componentsPicklistPicklist = __webpack_require__(48);
+	var _componentsLoginLogin = __webpack_require__(48);
+	
+	var _componentsPicklistPicklist = __webpack_require__(54);
 	
 	var _componentsCommonStateService = __webpack_require__(28);
 	
-	var _componentsCommonUserService = __webpack_require__(46);
+	var _componentsCommonUserService = __webpack_require__(52);
 	
 	_angular2['default'].module('app', [_angularUiRouter2['default'], _angularAnimate2['default'], _angularCookies2['default'],
 	// home is the module, the angular module
@@ -107,7 +109,7 @@
 	// all angular modules have a name
 	// property who's value is the name you set the
 	// module to be
-	_componentsHomeHome.home.name, _componentsAdjacentAdjacent.adjacent.name, _componentsAdjacentQuizAdjacentQuiz.adjacentQuiz.name, _componentsCapitalQuizCapitalQuiz.capitalQuiz.name, _componentsPicklistPicklist.picklist.name, _componentsLoginLogin.login.name]).directive('app', _appDirective.appDirective).service('stateService', _componentsCommonStateService.StateService).service('userService', _componentsCommonUserService.UserService);
+	_componentsHomeHome.home.name, _componentsAdjacentAdjacent.adjacent.name, _componentsAdjacentQuizAdjacentQuiz.adjacentQuiz.name, _componentsCapitalQuizCapitalQuiz.capitalQuiz.name, _componentsPicklistPicklist.picklist.name, _componentsStateDropdownStateDropdown.stateDropdown.name, _componentsLoginLogin.login.name]).directive('app', _appDirective.appDirective).service('stateService', _componentsCommonStateService.StateService).service('userService', _componentsCommonUserService.UserService);
 
 /***/ },
 /* 1 */
@@ -493,7 +495,7 @@
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700);", ""]);
 	
 	// module
-	exports.push([module.id, "html,\nbody {\n  height: 100%;\n}\nbody {\n  font-family: 'Roboto', sans-serif;\n  background-color: #efefef;\n}\nbody * {\n  box-sizing: border-box;\n}\na {\n  color: #fff;\n  text-decoration: none;\n}\na:visited {\n  color: #fff;\n}\na:hover,\na:active {\n  text-decoration: none;\n}\n#app header nav {\n  height: 75px;\n  background-color: #ff5722;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n  z-index: 99999;\n  position: fixed;\n  min-width: 100%;\n  padding: 15px;\n}\n#app header nav .header-text {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: stretch;\n}\n#app header nav .header-text .logo {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 1rem;\n  cursor: pointer;\n}\n#app header nav .header-text .logo:before,\n#app header nav .header-text .logo:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .logo:after {\n  clear: both;\n}\n@media screen and (max-width: 600px) {\n  #app header nav .header-text .logo {\n    font-size: 0.7rem;\n  }\n}\n#app header nav .header-text .page-title {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 20px;\n  flex-grow: 1;\n  flex-shrink: 0;\n  flex-basis: 100px;\n}\n#app header nav .header-text .page-title:before,\n#app header nav .header-text .page-title:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .page-title:after {\n  clear: both;\n}\n/*        width 25% */\n/*\n        @media screen and (max-width: 600px)\n          font-size 0.9rem\n          width 25%\n          */\n.links {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 50%;\n  margin-right: 0%;\n}\n.links:before,\n.links:after {\n  content: '';\n  display: table;\n}\n.links:after {\n  clear: both;\n}\n.links * {\n  font-size: 1.3rem;\n  margin-left: 0.1rem;\n  margin-top: 0.1rem;\n  flex-grow: 2;\n  flex-shrink: 0;\n  flex-basis: 200px;\n}\n.links .nav-anchor {\n  display: block;\n  font-size: 1rem;\n/*\n          @media screen and (max-width: 600px)\n            font-size 0.7rem\n          */\n}\nmain {\n  padding-top: 75px;\n}\n.main-content {\n  background-color: rgba(0,0,0,0.4);\n}\n.button {\n  outline: none;\n  border: none;\n  border-radius: 2px;\n  background-color: #ff5722;\n  color: #fff;\n  text-transform: uppercase;\n  text-align: center;\n  min-width: 88px;\n  min-height: 36px;\n  overflow: hidden;\n  user-select: none;\n  vertical-align: middle;\n  position: relative;\n  padding: 0px 6px;\n  white-space: nowrap;\n  cursor: pointer;\n  font-weight: 500;\n  user-select: none;\n  font-size: 1.5rem;\n  line-height: 30px;\n}\n.button[disabled],\n.button.disabled,\n.button :disabled {\n  background-color: #fff !important;\n  color: rgba(0,0,0,0.26);\n  box-shadow: none !important;\n}\n.button.accent {\n  background-color: #1de9b6;\n}\n.button.fab {\n  width: 56px;\n  min-width: 0px;\n  background-clip: padding-box;\n  height: 56px;\n  line-height: 56px;\n  z-index: 20;\n  border-radius: 50%;\n}\n.button:active,\n.button:focus {\n  border: none;\n  outline: none;\n}\n.button.raised,\n.button.fab {\n  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n  transition: all 0.3s ease;\n}\n.button.raised:active,\n.button.fab:active {\n  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);\n}\nmain {\n  position: relative;\n  min-height: 400px;\n}\nmain [ui-view].ng-enter {\n  opacity: 0;\n  transform: scale3d(0.5, 0.5, 0.5);\n}\nmain [ui-view].ng-enter-active {\n  opacity: 1;\n  transform: scale3d(1, 1, 1);\n}\nmain [ui-view].ng-leave {\n  opacity: 1;\n  transform: translate3d(0, 0, 0);\n}\nmain [ui-view].ng-leave-active {\n  opacity: 0;\n  transform: translate3d(100px, 0, 0);\n}\nmain [ui-view].ng-enter,\nmain [ui-view].ng-leave {\n  position: absolute;\n  left: 0;\n  right: 0;\n  transition: all 0.5s ease-in-out;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  height: 100%;\n}\nbody {\n  font-family: 'Roboto', sans-serif;\n  background-color: #efefef;\n}\nbody * {\n  box-sizing: border-box;\n}\na {\n  color: #fff;\n  text-decoration: none;\n}\na:visited {\n  color: #fff;\n}\na:hover,\na:active {\n  text-decoration: none;\n}\n#app header nav {\n  height: 75px;\n  background-color: #27279e;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n  z-index: 99999;\n  position: fixed;\n  min-width: 100%;\n  padding: 15px;\n}\n#app header nav .header-text {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: stretch;\n}\n#app header nav .header-text .logo {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 1rem;\n  cursor: pointer;\n}\n#app header nav .header-text .logo:before,\n#app header nav .header-text .logo:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .logo:after {\n  clear: both;\n}\n@media screen and (max-width: 600px) {\n  #app header nav .header-text .logo {\n    font-size: 0.7rem;\n  }\n}\n#app header nav .header-text .page-title {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 20px;\n  flex-grow: 1;\n  flex-shrink: 0;\n  flex-basis: 100px;\n}\n#app header nav .header-text .page-title:before,\n#app header nav .header-text .page-title:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .page-title:after {\n  clear: both;\n}\n/*        width 25% */\n/*\n        @media screen and (max-width: 600px)\n          font-size 0.9rem\n          width 25%\n          */\n.links {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 50%;\n  margin-right: 0%;\n}\n.links:before,\n.links:after {\n  content: '';\n  display: table;\n}\n.links:after {\n  clear: both;\n}\n.links * {\n  font-size: 1.3rem;\n  margin-left: 0.1rem;\n  margin-top: 0.1rem;\n  flex-grow: 2;\n  flex-shrink: 0;\n  flex-basis: 200px;\n}\n.links .nav-anchor {\n  display: block;\n  font-size: 1rem;\n/*\n          @media screen and (max-width: 600px)\n            font-size 0.7rem\n          */\n}\nmain {\n  padding-top: 75px;\n}\n.main-content {\n  background-color: rgba(71,5,24,0.4);\n}\n.button {\n  outline: none;\n  border: none;\n  border-radius: 2px;\n  background-color: #27279e;\n  color: #fff;\n  text-transform: uppercase;\n  text-align: center;\n  min-width: 88px;\n  min-height: 36px;\n  overflow: hidden;\n  user-select: none;\n  vertical-align: middle;\n  position: relative;\n  padding: 0px 6px;\n  white-space: nowrap;\n  cursor: pointer;\n  font-weight: 500;\n  user-select: none;\n  font-size: 1.5rem;\n  line-height: 30px;\n}\n.button[disabled],\n.button.disabled,\n.button :disabled {\n  background-color: #fff !important;\n  color: rgba(0,0,0,0.26);\n  box-shadow: none !important;\n}\n.button.accent {\n  background-color: #1de9b6;\n}\n.button.fab {\n  width: 56px;\n  min-width: 0px;\n  background-clip: padding-box;\n  height: 56px;\n  line-height: 56px;\n  z-index: 20;\n  border-radius: 50%;\n}\n.button:active,\n.button:focus {\n  border: none;\n  outline: none;\n}\n.button.raised,\n.button.fab {\n  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n  transition: all 0.3s ease;\n}\n.button.raised:active,\n.button.fab:active {\n  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);\n}\nmain {\n  position: relative;\n  min-height: 400px;\n}\nmain [ui-view].ng-enter {\n  opacity: 0;\n  transform: scale3d(0.5, 0.5, 0.5);\n}\nmain [ui-view].ng-enter-active {\n  opacity: 1;\n  transform: scale3d(1, 1, 1);\n}\nmain [ui-view].ng-leave {\n  opacity: 1;\n  transform: translate3d(0, 0, 0);\n}\nmain [ui-view].ng-leave-active {\n  opacity: 0;\n  transform: translate3d(100px, 0, 0);\n}\nmain [ui-view].ng-enter,\nmain [ui-view].ng-leave {\n  position: absolute;\n  left: 0;\n  right: 0;\n  transition: all 0.5s ease-in-out;\n}\n", ""]);
 	
 	// exports
 
@@ -37749,7 +37751,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".home .hero {\n  height: 600px;\n  background-color: rgba(0,0,0,0.4);\n}\n.home .hero * {\n  color: #fff;\n}\n.home .hero .title {\n  *zoom: 1;\n  width: auto;\n  max-width: 600px;\n  float: none;\n  display: block;\n  margin-right: auto;\n  margin-left: auto;\n  padding-left: 0;\n  padding-right: 0;\n  text-align: center;\n}\n.home .hero .title:before,\n.home .hero .title:after {\n  content: '';\n  display: table;\n}\n.home .hero .title:after {\n  clear: both;\n}\n.home .hero .title h1 {\n  font-size: 2.5rem;\n  font-weight: bold;\n}\n.home .hero .title h3 {\n  font-size: 1.5rem;\n  font-style: italic;\n}\n.home .hero .title * {\n  font-weight: 300;\n}\n.home .items {\n  *zoom: 1;\n  width: auto;\n  max-width: 600px;\n  float: none;\n  display: block;\n  margin-right: auto;\n  margin-left: auto;\n  padding-left: 0;\n  padding-right: 0;\n}\n.home .items:before,\n.home .items:after {\n  content: '';\n  display: table;\n}\n.home .items:after {\n  clear: both;\n}\n", ""]);
+	exports.push([module.id, ".home .hero {\n  height: 600px;\n  background-color: rgba(71,5,24,0.4);\n}\n.home .hero * {\n  color: #fff;\n}\n.home .hero .title {\n  *zoom: 1;\n  width: auto;\n  max-width: 600px;\n  float: none;\n  display: block;\n  margin-right: auto;\n  margin-left: auto;\n  padding-left: 0;\n  padding-right: 0;\n  text-align: center;\n}\n.home .hero .title:before,\n.home .hero .title:after {\n  content: '';\n  display: table;\n}\n.home .hero .title:after {\n  clear: both;\n}\n.home .hero .title h1 {\n  font-size: 2.5rem;\n  font-weight: bold;\n}\n.home .hero .title h3 {\n  font-size: 1.5rem;\n  font-style: italic;\n}\n.home .hero .title * {\n  font-weight: 300;\n}\n.home .items {\n  *zoom: 1;\n  width: auto;\n  max-width: 600px;\n  float: none;\n  display: block;\n  margin-right: auto;\n  margin-left: auto;\n  padding-left: 0;\n  padding-right: 0;\n}\n.home .items:before,\n.home .items:after {\n  content: '';\n  display: table;\n}\n.home .items:after {\n  clear: both;\n}\n", ""]);
 	
 	// exports
 
@@ -50411,8 +50413,10 @@
 	};
 	
 	exports.messages = messages;
-	var webservice_ext = '.json';
-	var deployment_context = '/state-geo-quiz';
+	// let webservice_ext = ''; //uses server-side mongo db
+	var webservice_ext = '.json'; //uses local json file
+	// let deployment_context = '/state-geo-quiz'; //deploy in Tomcat
+	var deployment_context = ''; //deploy locally in dist folder
 	
 	var webservice_url = {
 		states: deployment_context + "/states" + webservice_ext,
@@ -50503,12 +50507,11 @@
 	  function AdjacentQuizComponent(stateService) {
 	    _classCallCheck(this, AdjacentQuizComponent);
 	
+	    this.service = stateService;
 	    this.greeting = 'AdjacentQuizComponent!';
 	    this.selectedState = {};
 	    this.answer = '';
-	    this.service = stateService;
 	    this.adjacentStates = [];
-	    this.populatePageData();
 	    this.resultMsg = '';
 	    this.missingPickedStates = [];
 	    this.wrongPickedStates = [];
@@ -50516,20 +50519,11 @@
 	    this.pickedStates = [];
 	  }
 	
-	  /* Fill adjacentStates array and pick a random one to display in drop down */
-	
 	  _createClass(AdjacentQuizComponent, [{
-	    key: 'populatePageData',
-	    value: function populatePageData() {
-	      var _this = this;
-	
-	      this.service.queryAdjacentStates().then(function (result) {
-	        _this.adjacentStates = util.sortArrayByProperty(result.data, 'name');
-	      }).then(function (result) {
-	        //select a random state from array
-	        _this.selectedState = util.randomArrayItem(_this.adjacentStates);
-	        console.log("Selected state: ", _this.selectedState);
-	      });
+	    key: 'setSelectedState',
+	    value: function setSelectedState(state) {
+	      console.log("setSelectedState() called with argument: " + state);
+	      this.selectedState = state;
 	    }
 	  }, {
 	    key: 'submitAnswer',
@@ -50545,6 +50539,11 @@
 	          break;
 	        }
 	      }
+	    }
+	  }, {
+	    key: 'clearSelections',
+	    value: function clearSelections(state) {
+	      console.log("clearSelections() called with argument: " + state);
 	    }
 	  }, {
 	    key: 'clearResultsMessages',
@@ -50603,7 +50602,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".adjacentQuiz {\n  position: relative;\n  height: 600px;\n  display: flex;\n  align-items: flex-start;\n  justify-content: center;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n.main-content,\nbackground-color alpha(black,\n40%),\na.cheatLink {\n  color: #00f;\n  margin-top: 3rem;\n  text-decoration: none;\n}\n.main-content:visited,\nbackground-color alpha(black:visited,\n40%):visited,\na.cheatLink:visited,\n.main-content color blue,\nbackground-color alpha(black color blue,\n40%) color blue,\na.cheatLink color blue,\n.main-content:hover,\nbackground-color alpha(black:hover,\n40%):hover,\na.cheatLink:hover,\n.main-content:active,\nbackground-color alpha(black:active,\n40%):active,\na.cheatLink:active {\n  text-decoration: none;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 100%;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-results-error {\n  color: #f00;\n}\n.quiz-results-success {\n  color: #008000;\n}\n", ""]);
+	exports.push([module.id, ".adjacentQuiz {\n  position: relative;\n  height: 600px;\n  display: flex;\n  align-items: flex-start;\n  justify-content: center;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n.main-content,\nbackground-color alpha(content-bgcolor,\n40%),\na.cheatLink {\n  color: #00f;\n  margin-top: 3rem;\n  text-decoration: none;\n}\n.main-content:visited,\nbackground-color alpha(content-bgcolor:visited,\n40%):visited,\na.cheatLink:visited,\n.main-content color blue,\nbackground-color alpha(content-bgcolor color blue,\n40%) color blue,\na.cheatLink color blue,\n.main-content:hover,\nbackground-color alpha(content-bgcolor:hover,\n40%):hover,\na.cheatLink:hover,\n.main-content:active,\nbackground-color alpha(content-bgcolor:active,\n40%):active,\na.cheatLink:active {\n  text-decoration: none;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 100%;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-results-error {\n  color: #f00;\n}\n.quiz-results-success {\n  color: #008000;\n}\n", ""]);
 	
 	// exports
 
@@ -50766,7 +50765,7 @@
 /* 35 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"adjacentQuiz\">\n<div class=\"adjacent-quiz-wrapper\">\n  <h1>Do You Know Adjacent States?</h1>\n  <form novalidate>\n\n  \t<label for=\"statesSelect\">What are the adjacent states of</label>\n  \t<select id=\"statesSelect\" ng-model=\"vm.selectedState\"\n  \t\tng-options=\"state.name for state in vm.adjacentStates\"\n      ng-click=\"vm.clearResultsMessages()\"></select>\n  \t<br/>\t\n  </form>\n  \n  <picklist selected-state=\"{{vm.selectedState.name}}\"></picklist>\n  \n  <div class=\"results-box\">\n    <div class=\"results-box-wrapper\">\n      <div class=\"quiz-results-title\">Quiz Results</div>\n    </div>\n      <div class=\"quiz-results\">\n        <div class=\"\">\n          <span class=\"quiz-results-error\" \n            ng-show=\"vm.wrongPickedStates.length !== 0\">\n            These are not adjacent states: \n          </span>\n          {{vm.wrongPickedStates.length === 0 ? '' : vm.wrongPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-error\" ng-show=\"vm.missingPickedStates.length !== 0\">\n            You missed these adjacent states: \n          </span>\n          {{vm.missingPickedStates.length === 0 ? '' : vm.missingPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-success\" ng-show=\"vm.successMessage.length !== 0\">\n            {{vm.successMessage}}\n          </span>\n        </div>\n      </div>\n    </div>\n    <div>\n      <a class=\"cheatLink\" ui-sref=\"adjacent\">If you want to learn the adjacent states, click here</a>\n      or <a href=\"https://www.google.com/maps/place/United+States/\" target=\"_blank\">Check out Google Maps</a>\n    </div>        \n  </div>\n  \n</div>\n</section>\n"
+	module.exports = "<section class=\"adjacentQuiz\">\n<div class=\"adjacent-quiz-wrapper\">\n  <h1>Do You Know Adjacent States?</h1> \n\n    <state-dropdown \n      component-id=\"adjacentStateSelectorId\"\n      component-label=\"Please Select a State\"\n      selected-state-listener=\"vm.setSelectedState(state)\"\n      click-listener=\"vm.clearSelections(state)\"\n     ></state-dropdown> \n    </br/>\n      \n  <picklist selected-state=\"{{vm.selectedState.name}}\"></picklist>\n  \n  <div class=\"results-box\">\n    <div class=\"results-box-wrapper\">\n      <div class=\"quiz-results-title\">Quiz Results</div>\n    </div>\n      <div class=\"quiz-results\">\n        <div class=\"\">\n          <span class=\"quiz-results-error\" \n            ng-show=\"vm.wrongPickedStates.length !== 0\">\n            These are not adjacent states: \n          </span>\n          {{vm.wrongPickedStates.length === 0 ? '' : vm.wrongPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-error\" ng-show=\"vm.missingPickedStates.length !== 0\">\n            You missed these adjacent states: \n          </span>\n          {{vm.missingPickedStates.length === 0 ? '' : vm.missingPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-success\" ng-show=\"vm.successMessage.length !== 0\">\n            {{vm.successMessage}}\n          </span>\n        </div>\n      </div>\n    </div>\n    <div>\n      <a class=\"cheatLink\" ui-sref=\"adjacent\">If you want to learn the adjacent states, click here</a>\n      or <a href=\"https://www.google.com/maps/place/United+States/\" target=\"_blank\">Check out Google Maps</a>\n    </div>        \n  </div>\n  \n</div>\n</section>\n"
 
 /***/ },
 /* 36 */
@@ -50947,7 +50946,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".main-content {\n  background-color: rgba(0,0,0,0.4);\n}\n.capitalQuiz {\n  position: relative;\n  height: 600px;\n  margin-left: 10px;\n  margin-right: 10px;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: center;\n}\n.capitalQuiz .capital-quiz-wrapper {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.quiz-submit {\n  padding-top: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-select-answer {\n  padding-top: 0.5rem;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 50%;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n", ""]);
+	exports.push([module.id, ".main-content {\n  background-color: rgba(71,5,24,0.01);\n}\n.capitalQuiz {\n  position: relative;\n  height: 600px;\n  margin-left: 10px;\n  margin-right: 10px;\n  display: flex;\n  flex-direction: column;\n  justify-content: flex-start;\n  align-items: center;\n}\n.capitalQuiz .capital-quiz-wrapper {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.quiz-submit {\n  padding-top: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-select-answer {\n  padding-top: 0.5rem;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 50%;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n", ""]);
 	
 	// exports
 
@@ -51003,6 +51002,223 @@
 /* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _stateDropdownComponent = __webpack_require__(43);
+	
+	var _stateDropdownService = __webpack_require__(47);
+	
+	var _angular = __webpack_require__(9);
+	
+	var _angular2 = _interopRequireDefault(_angular);
+	
+	var _angularUiRouter = __webpack_require__(11);
+	
+	var _angularUiRouter2 = _interopRequireDefault(_angularUiRouter);
+	
+	var stateDropdown = _angular2['default'].module('stateDropdown', [_angularUiRouter2['default']]).config(function ($stateProvider) {
+	  $stateProvider.state('stateDropdown', {
+	    url: '/stateDropdown',
+	    template: '<state-dropdown></state-dropdown>'
+	  });
+	}).directive('stateDropdown', _stateDropdownComponent.stateDropdownDirective).service('stateDropdownService', _stateDropdownService.StateDropdownService);
+	exports.stateDropdown = stateDropdown;
+
+/***/ },
+/* 43 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	__webpack_require__(44);
+	
+	var _stateDropdownComponent = __webpack_require__(43);
+	
+	var _commonStateService = __webpack_require__(28);
+	
+	var _commonUtilities = __webpack_require__(34);
+	
+	var util = _interopRequireWildcard(_commonUtilities);
+	
+	var _stateDropdownHtml = __webpack_require__(46);
+	
+	var _stateDropdownHtml2 = _interopRequireDefault(_stateDropdownHtml);
+	
+	var stateDropdownDirective = function stateDropdownDirective() {
+	  return {
+	    controller: _stateDropdownComponent.StateDropdownComponent,
+	    template: _stateDropdownHtml2['default'],
+	    controllerAs: 'vm',
+	    scope: {
+	      componentId: '@',
+	      componentLabel: '@',
+	      clickListener: '&',
+	      selectedStateListener: '&'
+	    },
+	    replace: true,
+	    bindToController: true,
+	    restrict: 'E'
+	  };
+	};
+	
+	exports.stateDropdownDirective = stateDropdownDirective;
+	
+	var StateDropdownComponent = (function () {
+	  function StateDropdownComponent(stateService) {
+	    _classCallCheck(this, StateDropdownComponent);
+	
+	    this.service = stateService;
+	    this.populatePageData();
+	    this.states = [];
+	    this.selectedState = {};
+	    console.log("StateDropdownComponent: " + this.toString());
+	  }
+	
+	  /* Fill adjacentStates array and pick a random one to display in drop down */
+	
+	  _createClass(StateDropdownComponent, [{
+	    key: 'populatePageData',
+	    value: function populatePageData() {
+	      var _this = this;
+	
+	      this.service.queryAdjacentStates().then(function (result) {
+	        _this.states = util.sortArrayByProperty(result.data, 'name');
+	      }).then(function (result) {
+	        //select a random state from array
+	        _this.selectedState = util.randomArrayItem(_this.states);
+	        _this.selectedStateListener({ state: _this.selectedState });
+	        console.log("Selected state in StateDropdownComponent: ", _this.selectedState);
+	      });
+	    }
+	  }, {
+	    key: 'onClick',
+	    value: function onClick() {
+	      this.selectedStateListener({ state: this.selectedState });
+	      this.clickListener({ state: this.selectedState });
+	    }
+	  }, {
+	    key: 'toString',
+	    value: function toString() {
+	      return '\n      componentId: ' + this.componentId + ',\n      componentLabel: ' + this.componentLabel + ',\n      selectedState: ' + this.selectedState + ',\n      states: ' + this.states + '\n      ';
+	    }
+	  }]);
+	
+	  return StateDropdownComponent;
+	})();
+	
+	StateDropdownComponent.$inject = ['stateService'];
+	
+	exports.StateDropdownComponent = StateDropdownComponent;
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(45);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/stylus-loader/index.js!./stateDropdown.styl", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/stylus-loader/index.js!./stateDropdown.styl");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".stateDropdown {\n  position: relative;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	module.exports = "<section class=\"stateDropdown\">\n\n  <!-- Usage:\n  The 'state' argument is a State object with a name property\n    <state-dropdown \n      component-id=\"<component id attribute>\"\n      component-label=\"<component label text>\"\n      selected-state-listener=\"vm.setSelectedState(state)\"\n      click-listener=\"vm.clearSelections(state)\"    \n     ></state-dropdown> \n   -->\n\n  <form novalidate>\n\n  \t<label id=\"{{ vm.componentId }}Label\" for=\"{{ vm.componentId }}\">\n      <span style=\"font-weight:bold;\">{{ vm.componentLabel }}</span>\n    </label>\n  \t<select id=\"{{ vm.componentId }}\" ng-model=\"vm.selectedState\"\n  \t\tng-options=\"state.name for state in vm.states\"\n      ng-click=\"vm.onClick()\"></select>\n  \t<br/>\t\n  </form>\n\n\n</section>\n"
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var _angular = __webpack_require__(9);
+	
+	var _angular2 = _interopRequireDefault(_angular);
+	
+	var StateDropdownService = (function () {
+	  function StateDropdownService() {
+	    _classCallCheck(this, StateDropdownService);
+	
+	    this.greeting = 'StateDropdownService!';
+	  }
+	
+	  _createClass(StateDropdownService, [{
+	    key: 'getGreeting',
+	    value: function getGreeting() {
+	      return this.greeting;
+	    }
+	  }]);
+	
+	  return StateDropdownService;
+	})();
+	
+	StateDropdownService.$inject = [];
+	
+	exports.StateDropdownService = StateDropdownService;
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
 	//import {loginDirective} from './login.directive';
 	'use strict';
 	
@@ -51012,7 +51228,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _loginComponent = __webpack_require__(43);
+	var _loginComponent = __webpack_require__(49);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -51031,7 +51247,7 @@
 	exports.login = login;
 
 /***/ },
-/* 43 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51046,13 +51262,13 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(44);
+	__webpack_require__(50);
 	
-	var _loginComponent = __webpack_require__(43);
+	var _loginComponent = __webpack_require__(49);
 	
-	var _commonUserService = __webpack_require__(46);
+	var _commonUserService = __webpack_require__(52);
 	
-	var _loginHtml = __webpack_require__(47);
+	var _loginHtml = __webpack_require__(53);
 	
 	var _loginHtml2 = _interopRequireDefault(_loginHtml);
 	
@@ -51097,13 +51313,13 @@
 	exports.LoginComponent = LoginComponent;
 
 /***/ },
-/* 44 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(45);
+	var content = __webpack_require__(51);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -51123,7 +51339,7 @@
 	}
 
 /***/ },
-/* 45 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -51131,13 +51347,13 @@
 	
 	
 	// module
-	exports.push([module.id, ".login {\n  position: relative;\n}\nheight 600px {\n  display: flex;\n  flex-direction: column;\n  margin-top: 5%;\n}\n.main-content {\n  background-color: rgba(0,0,0,0.4);\n}\nh1 {\n  font-size: 2rem;\n  display: block;\n}\nlabel {\n  display: block;\n}\nlabel .login-item {\n  margin: 1rem;\n}\n.login-wrapper {\n  display: flex;\n  align-items: center;\n  padding: 2rem;\n  border-top: 1rem;\n}\n.login-button {\n  border-top: 2rem;\n}\n.input-fieldset {\n  border: 1px solid #cc3232;\n  box-shadow: inset 0 -3px 0 #cc3232;\n  border-bottom: 2rem;\n}\n", ""]);
+	exports.push([module.id, ".login {\n  position: relative;\n}\nheight 600px {\n  *zoom: 1;\n  width: auto;\n  max-width: 600px;\n  float: none;\n  display: block;\n  margin-right: auto;\n  margin-left: auto;\n  padding-left: 0;\n  padding-right: 0;\n  display: flex;\n  flex-direction: column;\n  margin-top: 5%;\n}\nheight 600px:before,\nheight 600px:after {\n  content: '';\n  display: table;\n}\nheight 600px:after {\n  clear: both;\n}\n.main-content {\n  background-color: rgba(71,5,24,0.4);\n}\nh1 {\n  font-size: 2rem;\n  display: block;\n}\nlabel {\n  display: block;\n}\nlabel .login-item {\n  margin: 1rem;\n}\n.login-wrapper {\n  display: flex;\n  align-items: center;\n  padding: 2rem;\n  border-top: 1rem;\n}\n.login-button {\n  border-top: 2rem;\n}\n.input-fieldset {\n  border: 1px solid #cc3232;\n  box-shadow: inset 0 -3px 0 #cc3232;\n  border-bottom: 2rem;\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 46 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51236,13 +51452,13 @@
 	exports.UserService = UserService;
 
 /***/ },
-/* 47 */
+/* 53 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"login\">\n  <div class=\"login-wrapper\">\n  <h3>Login</h3>\n\t\t<form novalidate>\n      <fieldset class=\"input-fieldset\">\n          <div class=\"login-itemr\">\n            <label for=\"usernameText\">User name:</label>\n            <input type=\"text\"  ng-model=\"vm.username\" \n            \tid=\"usernameText\" placeholder=\"Enter username\">\n          </div>\n          <div class=\"login-item\">\n            <label for=\"passwordText\">Password:</label>\n            <input type=\"password\" ng-model=\"vm.password\" \n            \tid=\"passwordText\" placeholder=\"Enter password\">\n          </div>\n      </fieldset>\n          <div class=\"login-item login-button\">\n            <button type=\"submit\" class=\"\"\n              ng-click=\"vm.login()\">Login</button>\n          </div>\n      </form>\n    </div>\n</section>\n"
 
 /***/ },
-/* 48 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51253,9 +51469,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _picklistComponent = __webpack_require__(49);
+	var _picklistComponent = __webpack_require__(55);
 	
-	var _picklistService = __webpack_require__(52);
+	var _picklistService = __webpack_require__(58);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -51274,7 +51490,7 @@
 	exports.picklist = picklist;
 
 /***/ },
-/* 49 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51291,11 +51507,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(50);
+	__webpack_require__(56);
 	
-	var _picklistComponent = __webpack_require__(49);
+	var _picklistComponent = __webpack_require__(55);
 	
-	var _picklistService = __webpack_require__(52);
+	var _picklistService = __webpack_require__(58);
 	
 	var _commonUtilities = __webpack_require__(34);
 	
@@ -51303,7 +51519,7 @@
 	
 	var _angular = __webpack_require__(9);
 	
-	var _picklistHtml = __webpack_require__(53);
+	var _picklistHtml = __webpack_require__(59);
 	
 	var _picklistHtml2 = _interopRequireDefault(_picklistHtml);
 	
@@ -51427,7 +51643,9 @@
 	      try {
 	        //clear previous values
 	        this.clearParentMessages();
+	        // erroneously picked adjacent states
 	        this.extraPickedStates = this.service.checkForExtraPickedStates(this.selectedState, this.rightSelections);
+	        // adjacent states not picked
 	        this.missingPickedStates = this.service.checkForMissingPickedStates(this.selectedState, this.rightSelections);
 	        if (this.extraPickedStates.length != 0) {
 	          this.scope.$parent.vm.wrongPickedStates = this.extraPickedStates;
@@ -51474,13 +51692,13 @@
 	exports.PicklistComponent = PicklistComponent;
 
 /***/ },
-/* 50 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(51);
+	var content = __webpack_require__(57);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -51500,7 +51718,7 @@
 	}
 
 /***/ },
-/* 51 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -51514,7 +51732,7 @@
 
 
 /***/ },
-/* 52 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -51592,7 +51810,7 @@
 	exports.PicklistService = PicklistService;
 
 /***/ },
-/* 53 */
+/* 59 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"picklist\">\n<h3>{{ vm.greeting }}</h3>\n  <form novalidate>\n\t<div class=\"picklist-wrapper\">\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.leftSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.states\"></select>\n\t\t</div>\n\t\t<div class=\"picklist-buttons\">\t\n\t\t\t<button ng-click=\"vm.statePicked()\"><span class=\"picklist-controls\"> -&gt; </span></button>\n\t\t\t<button ng-click=\"vm.stateDeleted()\"><span class=\"picklist-controls\"> &lt;- </span></button>\n\t\t\t<button ng-click=\"vm.allStatesDeleted()\"><span class=\"picklist-controls\"> &lt;&lt;- </span></button>\n\t\t</div>\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.rightSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.rightSelections\"></select>\n\n\t\t</div>\n\t</div>\n\t<div class=\"\">\n\t\t<button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected States </button> \n\t</div> \n  </form>\n</section>\n"
