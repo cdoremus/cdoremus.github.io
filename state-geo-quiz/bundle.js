@@ -50415,8 +50415,8 @@
 	exports.messages = messages;
 	// let webservice_ext = ''; //uses server-side mongo db
 	var webservice_ext = '.json'; //uses local json file
-	var deployment_context = '/state-geo-quiz'; //deploy in Tomcat or github pages
-	//let deployment_context = ''; //deploy locally in dist folder
+	//let deployment_context = '/state-geo-quiz'; //deploy in Tomcat or github pages
+	var deployment_context = ''; //deploy locally in dist folder
 	
 	var webservice_url = {
 		states: deployment_context + "/states" + webservice_ext,
@@ -50886,6 +50886,7 @@
 	        //clear previous values
 	        // this.clearParentMessages();
 	        var selectedCapitalCorrect = this.service.checkSelectedCapital(this.selectedState, this.selectedCapital);
+	        console.log("Correct capital: " + this.selectedCapitalCorrect);
 	        if (selectedCapitalCorrect) {
 	          this.uiMessage = 'Selected capital is correct';
 	        } else {
@@ -50895,6 +50896,11 @@
 	        console.log("Error in CapitalQuizComponent.checkSelected(): ", error);
 	        this.uiMessage = error.message;
 	      }
+	    }
+	  }, {
+	    key: 'setSelectedState',
+	    value: function setSelectedState(state) {
+	      this.selectedState = state;
 	    }
 	  }, {
 	    key: 'resetSelectedCapital',
@@ -50955,7 +50961,7 @@
 /* 40 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"capitalQuiz\">\n  <div class=\"capital-quiz-wrapper\">\n    <h1>{{ vm.title }}</h1>\n    <form novalidate>\n  \n      <div class=\"quiz-select-question\">\n        <label for=\"statesSelect\">What is the capital of:</label>\n        <select id=\"statesSelect\" ng-model=\"vm.selectedState\"\n          ng-options=\"state.name for state in vm.states\"\n          ng-click=\"vm.resetSelectedCapital()\"></select>\n      </div>\t\n      <div class=\"quiz-select-answer\">\n        <label for=\"capitalSelect\">Select a capital:</label>\n        <select id=\"capitalSelect\" ng-model=\"vm.selectedCapital\"\n          ng-options=\"state.capital for state in vm.states | orderBy:'capital'\"></select>\n      </div>\n      <div class=\"quiz-submit\">\n        <button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected Capital </button> \n      </div> \n    </form>\n    <div class=\"results-box\">\n      <div class=\"results-box-wrapper\">\n        <div class=\"quiz-results-title\">Quiz Results</div>\n      </div>\n      <div class=\"quiz-results\">\n        {{ vm.uiMessage}}\n      </div>\n    </div>\n  </div>\n</section>\n"
+	module.exports = "<section class=\"capitalQuiz\">\n  <div class=\"capital-quiz-wrapper\">\n    <h1>{{ vm.title }}</h1>\n    <form novalidate>\n  \n      <div class=\"quiz-select-question\">          \n        <state-dropdown \n          component-id=\"stateSelectorId\"\n          component-label=\"What is the capital of:\"\n          selected-state-listener=\"vm.setSelectedState(state)\"\n          click-listener=\"vm.resetSelectedCapital()\"\n        ></state-dropdown> \n      </div>\n      \n      \t\n      <div class=\"quiz-select-answer\">\n        <label for=\"capitalSelect\">Select a capital:</label>\n        <select id=\"capitalSelect\" ng-model=\"vm.selectedCapital\"\n          ng-options=\"state.capital for state in vm.states | orderBy:'capital'\"></select>\n      </div>\n      <div class=\"quiz-submit\">\n        <button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected Capital </button> \n      </div> \n    </form>\n    <div class=\"results-box\">\n      <div class=\"results-box-wrapper\">\n        <div class=\"quiz-results-title\">Quiz Results</div>\n      </div>\n      <div class=\"quiz-results\">\n        {{ vm.uiMessage}}\n      </div>\n    </div>\n  </div>\n</section>\n"
 
 /***/ },
 /* 41 */
@@ -51099,7 +51105,7 @@
 	    value: function populatePageData() {
 	      var _this = this;
 	
-	      this.service.queryAdjacentStates().then(function (result) {
+	      this.service.queryStates().then(function (result) {
 	        _this.states = util.sortArrayByProperty(result.data, 'name');
 	      }).then(function (result) {
 	        //select a random state from array
