@@ -50415,8 +50415,8 @@
 	exports.messages = messages;
 	// let webservice_ext = ''; //uses server-side mongo db
 	var webservice_ext = '.json'; //uses local json file
-	//let deployment_context = '/state-geo-quiz'; //deploy in Tomcat or github pages
-	var deployment_context = ''; //deploy locally in dist folder
+	var deployment_context = '/state-geo-quiz'; //deploy in Tomcat or github pages
+	//let deployment_context = ''; //deploy locally in dist folder
 	
 	var webservice_url = {
 		states: deployment_context + "/states" + webservice_ext,
