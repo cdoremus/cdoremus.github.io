@@ -50415,8 +50415,8 @@
 	exports.messages = messages;
 	// let webservice_ext = ''; //uses server-side mongo db
 	var webservice_ext = '.json'; //uses local json file
-	var deployment_context = '/state-geo-quiz'; //deploy in Tomcat or github pages
-	//let deployment_context = ''; //deploy locally in dist folder
+	// let deployment_context = '/state-geo-quiz'; //deploy in Tomcat
+	var deployment_context = ''; //deploy locally in dist folder
 	
 	var webservice_url = {
 		states: deployment_context + "/states" + webservice_ext,
@@ -50765,7 +50765,7 @@
 /* 35 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"adjacentQuiz\">\n<div class=\"adjacent-quiz-wrapper\">\n  <h1>Do You Know Adjacent States?</h1> \n\n    <state-dropdown \n      component-id=\"adjacentStateSelectorId\"\n      component-label=\"Please Select a State\"\n      selected-state-listener=\"vm.setSelectedState(state)\"\n      click-listener=\"vm.clearSelections(state)\"\n     ></state-dropdown> \n    </br/>\n      \n  <picklist selected-state=\"{{vm.selectedState.name}}\"></picklist>\n  \n  <div class=\"results-box\">\n    <div class=\"results-box-wrapper\">\n      <div class=\"quiz-results-title\">Quiz Results</div>\n    </div>\n      <div class=\"quiz-results\">\n        <div class=\"\">\n          <span class=\"quiz-results-error\" \n            ng-show=\"vm.wrongPickedStates.length !== 0\">\n            These are not adjacent states: \n          </span>\n          {{vm.wrongPickedStates.length === 0 ? '' : vm.wrongPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-error\" ng-show=\"vm.missingPickedStates.length !== 0\">\n            You missed these adjacent states: \n          </span>\n          {{vm.missingPickedStates.length === 0 ? '' : vm.missingPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-success\" ng-show=\"vm.successMessage.length !== 0\">\n            {{vm.successMessage}}\n          </span>\n        </div>\n      </div>\n    </div>\n    <div>\n      <a class=\"cheatLink\" ui-sref=\"adjacent\">If you want to learn the adjacent states, click here</a>\n      or <a href=\"https://www.google.com/maps/place/United+States/\" target=\"_blank\">Check out Google Maps</a>\n    </div>        \n  </div>\n  \n</div>\n</section>\n"
+	module.exports = "<section class=\"adjacentQuiz\">\n<div class=\"adjacent-quiz-wrapper\">\n  <h1>Do You Know Adjacent States?</h1> \n\n    <state-dropdown \n      component-id=\"adjacentStateSelectorId\"\n      component-label=\"Please Select a State\"\n      selected-state-listener=\"vm.setSelectedState(state)\"\n      click-listener=\"vm.clearSelections(state)\"\n     ></state-dropdown> \n    </br/>\n      \n  <picklist selected-state=\"vm.selectedState.name\"></picklist>\n  \n  <div class=\"results-box\">\n    <div class=\"results-box-wrapper\">\n      <div class=\"quiz-results-title\">Quiz Results</div>\n    </div>\n      <div class=\"quiz-results\">\n        <div class=\"\">\n          <span class=\"quiz-results-error\" \n            ng-show=\"vm.wrongPickedStates.length !== 0\">\n            These are not adjacent states: \n          </span>\n          {{vm.wrongPickedStates.length === 0 ? '' : vm.wrongPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-error\" ng-show=\"vm.missingPickedStates.length !== 0\">\n            You missed these adjacent states: \n          </span>\n          {{vm.missingPickedStates.length === 0 ? '' : vm.missingPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-success\" ng-show=\"vm.successMessage.length !== 0\">\n            {{vm.successMessage}}\n          </span>\n        </div>\n      </div>\n    </div>\n    <div>\n      <a class=\"cheatLink\" ui-sref=\"adjacent\">If you want to learn the adjacent states, click here</a>\n      or <a href=\"https://www.google.com/maps/place/United+States/\" target=\"_blank\">Check out Google Maps</a>\n    </div>        \n  </div>\n  \n</div>\n</section>\n"
 
 /***/ },
 /* 36 */
@@ -51535,7 +51535,7 @@
 	    template: _picklistHtml2['default'],
 	    controllerAs: 'vm',
 	    scope: {
-	      selectedState: '@'
+	      selectedState: '='
 	    },
 	    replace: true,
 	    bindToController: true, //assures that selectedState becomes a PicklistComponent property
@@ -51556,6 +51556,12 @@
 	     * List of states fetched from the server
 	     */
 	    this.states = [];
+	
+	    /**
+	     * List of all states
+	     */
+	    this.allStates = [];
+	
 	    /**
 	     * All items in the right list
 	     */
@@ -51592,7 +51598,10 @@
 	
 	      if (this.states.length === 0) {
 	        this.service.queryStates().then(function (result) {
-	          return _this.states = result.data;
+	          _this.allStates = result.data;
+	          _this.states = _this.allStates.filter(function (state) {
+	            return state.name !== _this.selectedState;
+	          });
 	        })['catch'](function (error) {
 	          return console.log("ERROR: ", error);
 	        });
@@ -51686,6 +51695,9 @@
 	
 	      this.scope.$parent.$watch('vm.selectedState', function (newValue, oldValue) {
 	        _this4.rightSelections = [];
+	        _this4.states = _this4.allStates.filter(function (state) {
+	          return state.name !== _this4.selectedState;
+	        });
 	      });
 	    }
 	  }]);
