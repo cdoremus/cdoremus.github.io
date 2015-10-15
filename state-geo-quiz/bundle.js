@@ -63209,6 +63209,8 @@
 	
 	var CapitalQuizComponent = (function () {
 	  function CapitalQuizComponent(stateService) {
+	    var _this = this;
+	
 	    _classCallCheck(this, CapitalQuizComponent);
 	
 	    this.title = 'Do you know the state capitals?';
@@ -63218,22 +63220,34 @@
 	    this.selectedCapital = {};
 	    this.uiMessage = '';
 	    this.populatePageData();
+	
+	    this.service.selectedStateSubject.subscribe(function (newSelectedState) {
+	      _this.selectedStateChanged(newSelectedState);
+	    });
 	  }
 	
 	  _createClass(CapitalQuizComponent, [{
 	    key: 'populatePageData',
 	    value: function populatePageData() {
-	      var _this = this;
+	      var _this2 = this;
 	
 	      this.service.queryStates().then(function (result) {
-	        // this.states = util.sortArrayByProperty(result.data, 'name');
-	        _this.states = result.data;
+	        _this2.states = result.data;
 	      })
 	      //select a random state from array
 	      .then(function (result) {
-	        _this.selectedState = util.randomArrayItem(_this.states);
-	        console.log("Selected state for capitals quiz: ", _this.selectedState);
+	        _this2.selectedState = util.randomArrayItem(_this2.states);
+	        console.log("Selected state for capitals quiz: ", _this2.selectedState);
 	      });
+	    }
+	  }, {
+	    key: 'selectedStateChanged',
+	    value: function selectedStateChanged(newSelectedState) {
+	      var printVal = newSelectedState == null ? 'null' : newSelectedState.name;
+	      console.log('CapitalQuizComponent subscriber selectedStateChanged() called with newSelectedState: ' + printVal);
+	      //Set selectedState to new value
+	      this.selectedState = newSelectedState;
+	      this.resetSelectedCapital();
 	    }
 	
 	    /**
@@ -63244,8 +63258,6 @@
 	    key: 'checkSelected',
 	    value: function checkSelected() {
 	      try {
-	        //clear previous values
-	        // this.clearParentMessages();
 	        var selectedCapitalCorrect = this.service.checkSelectedCapital(this.selectedState, this.selectedCapital);
 	        console.log("Correct capital: " + this.selectedCapitalCorrect);
 	        if (selectedCapitalCorrect) {
@@ -63257,11 +63269,6 @@
 	        console.log("Error in CapitalQuizComponent.checkSelected(): ", error);
 	        this.uiMessage = error.message;
 	      }
-	    }
-	  }, {
-	    key: 'setSelectedState',
-	    value: function setSelectedState(state) {
-	      this.selectedState = state;
 	    }
 	  }, {
 	    key: 'resetSelectedCapital',
@@ -63322,7 +63329,7 @@
 /* 42 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"capitalQuiz\">\n  <div class=\"capital-quiz-wrapper\">\n    <h1>{{ vm.title }}</h1>\n    <form novalidate>\n  \n      <div class=\"quiz-select-question\">          \n        <state-dropdown \n          component-id=\"stateSelectorId\"\n          component-label=\"What is the capital of:\"\n          selected-state-listener=\"vm.setSelectedState(state)\"\n          click-listener=\"vm.resetSelectedCapital()\"\n        ></state-dropdown> \n      </div>\n      \n      \t\n      <div class=\"quiz-select-answer\">\n        <label for=\"capitalSelect\">Select a capital:</label>\n        <select id=\"capitalSelect\" ng-model=\"vm.selectedCapital\"\n          ng-options=\"state.capital for state in vm.states | orderBy:'capital'\"></select>\n      </div>\n      <div class=\"quiz-submit\">\n        <button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected Capital </button> \n      </div> \n    </form>\n    <div class=\"results-box\">\n      <div class=\"results-box-wrapper\">\n        <div class=\"quiz-results-title\">Quiz Results</div>\n      </div>\n      <div class=\"quiz-results\">\n        {{ vm.uiMessage}}\n      </div>\n    </div>\n  </div>\n</section>\n"
+	module.exports = "<section class=\"capitalQuiz\">\n  <div class=\"capital-quiz-wrapper\">\n    <h1>{{ vm.title }}</h1>\n    <form novalidate>\n  \n      <div class=\"quiz-select-question\">          \n        <state-dropdown \n          component-id=\"stateSelectorId\"\n          component-label=\"What is the capital of:\"\n        ></state-dropdown> \n      </div>\n      \n      \t\n      <div class=\"quiz-select-answer\">\n        <label for=\"capitalSelect\">Select a capital:</label>\n        <select id=\"capitalSelect\" ng-model=\"vm.selectedCapital\"\n          ng-options=\"state.capital for state in vm.states | orderBy:'capital'\"></select>\n      </div>\n      <div class=\"quiz-submit\">\n        <button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected Capital </button> \n      </div> \n    </form>\n    <div class=\"results-box\">\n      <div class=\"results-box-wrapper\">\n        <div class=\"quiz-results-title\">Quiz Results</div>\n      </div>\n      <div class=\"quiz-results\">\n        {{ vm.uiMessage}}\n      </div>\n    </div>\n  </div>\n</section>\n"
 
 /***/ },
 /* 43 */
@@ -63436,9 +63443,7 @@
 	    controllerAs: 'vm',
 	    scope: {
 	      componentId: '@',
-	      componentLabel: '@',
-	      clickListener: '&',
-	      selectedStateListener: '&'
+	      componentLabel: '@'
 	    },
 	    replace: true,
 	    bindToController: true,
@@ -63456,10 +63461,12 @@
 	    this.populatePageData();
 	    this.states = [];
 	    this.selectedState = {};
-	    console.log("StateDropdownComponent: " + this.toString());
 	  }
 	
-	  /* Fill adjacentStates array and pick a random one to display in drop down */
+	  /** Fill states array, pick a random one to display in drop down
+	   * and notify Rx Observable in StateService that the selected
+	   * state has changed.
+	   */
 	
 	  _createClass(StateDropdownComponent, [{
 	    key: 'populatePageData',
@@ -63471,21 +63478,18 @@
 	      }).then(function (result) {
 	        //select a random state from array
 	        _this.selectedState = util.randomArrayItem(_this.states);
-	        _this.selectedStateListener({ state: _this.selectedState });
+	        //notify StateService RxObservable
 	        _this.service.selectedStateChanged(_this.selectedState);
-	        console.log("Selected state in StateDropdownComponent: ", _this.selectedState);
 	      });
 	    }
+	
+	    /**
+	     * Notify Rx Observable in StateService that the selected
+	     * state has changed.
+	     */
 	  }, {
 	    key: 'onClick',
 	    value: function onClick() {
-	      if (this.selectedStateListener) {
-	        this.selectedStateListener({ state: this.selectedState });
-	      }
-	      if (this.clickListener) {
-	        this.clickListener({ state: this.selectedState });
-	      }
-	      //notify state service RxObservable via selectedStateChanged()     
 	      this.service.selectedStateChanged(this.selectedState);
 	    }
 	  }, {
@@ -63546,7 +63550,7 @@
 /* 48 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"stateDropdown\">\n\n  <!-- Usage:\n  The 'state' argument is a State object with a name property\n    <state-dropdown \n      component-id=\"<component id attribute>\"\n      component-label=\"<component label text>\"\n      selected-state-listener=\"vm.setSelectedState(state)\"\n      click-listener=\"vm.clearSelections(state)\"    \n     ></state-dropdown> \n   -->\n\n  <form novalidate>\n\n  \t<label id=\"{{ vm.componentId }}Label\" for=\"{{ vm.componentId }}\">\n      <span style=\"font-weight:bold;\">{{ vm.componentLabel }}</span>\n    </label>\n  \t<select id=\"{{ vm.componentId }}\" ng-model=\"vm.selectedState\"\n  \t\tng-options=\"state.name for state in vm.states\"\n      ng-click=\"vm.onClick()\"></select>\n  \t<br/>\t\n  </form>\n\n\n</section>\n"
+	module.exports = "<section class=\"stateDropdown\">\n\n  <!-- Usage:\n  The 'state' argument is a State object with a name property\n    <state-dropdown \n      component-id=\"<component id attribute>\"\n      component-label=\"<component label text>\"\n     ></state-dropdown> \n   -->\n\n  <form novalidate>\n\n  \t<label id=\"{{ vm.componentId }}Label\" for=\"{{ vm.componentId }}\">\n      <span style=\"font-weight:bold;\">{{ vm.componentLabel }}</span>\n    </label>\n  \t<select id=\"{{ vm.componentId }}\" ng-model=\"vm.selectedState\"\n  \t\tng-options=\"state.name for state in vm.states\"\n      ng-click=\"vm.onClick()\"></select>\n  \t<br/>\t\n  </form>\n\n\n</section>\n"
 
 /***/ },
 /* 49 */
