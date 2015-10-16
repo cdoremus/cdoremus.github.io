@@ -62783,7 +62783,10 @@
 		adjacentStates: deployment_context + "/adjacentStates" + webservice_ext,
 		users: deployment_context + "/users" + webservice_ext
 	};
+	
 	exports.webservice_url = webservice_url;
+	var no_adjacent_states = ["Hawaii", "Alaska"];
+	exports.no_adjacent_states = no_adjacent_states;
 
 /***/ },
 /* 32 */
@@ -62994,7 +62997,6 @@
 	 *  the picked states
 	 */
 	var extraPickedStates = function extraPickedStates(adjacentStates, pickedStates) {
-	  console.log('Selected adjacent states: ', pickedStates);
 	  if (pickedStates === undefined || pickedStates.length === 0) {
 	    throw new Error(Constants.messages.CandidateAdjacentsNotPicked);
 	  }
@@ -64047,13 +64049,13 @@
 	        this.extraPickedStates = this.service.checkForExtraPickedStates(this.selectedState, this.rightSelections);
 	        // adjacent states not picked
 	        this.missingPickedStates = this.service.checkForMissingPickedStates(this.selectedState, this.rightSelections);
-	        if (this.extraPickedStates.length != 0) {
+	        if (this.extraPickedStates && this.extraPickedStates.length != 0) {
 	          this.scope.$parent.vm.wrongPickedStates = this.extraPickedStates;
 	        }
-	        if (this.missingPickedStates.length != 0) {
+	        if (this.missingPickedStates && this.missingPickedStates.length != 0) {
 	          this.scope.$parent.vm.missingPickedStates = this.missingPickedStates;
 	        }
-	        if (this.extraPickedStates.length === 0 && this.missingPickedStates.length === 0) {
+	        if (this.extraPickedStates && this.extraPickedStates.length === 0 && (this.missingPickedStates && this.missingPickedStates.length === 0)) {
 	          this.scope.$parent.vm.successMessage = 'All adjacent states you selected are correct';
 	        }
 	      } catch (error) {
@@ -64063,7 +64065,7 @@
 	    }
 	
 	    /**
-	     * Clears messages on the parent page 
+	     * Clears messages on the parent page. 
 	     */
 	  }, {
 	    key: 'clearParentMessages',
@@ -64163,6 +64165,10 @@
 	
 	var util = _interopRequireWildcard(_commonUtilities);
 	
+	var _commonConstants = __webpack_require__(31);
+	
+	var constants = _interopRequireWildcard(_commonConstants);
+	
 	var _commonStateService = __webpack_require__(28);
 	
 	var PicklistService = (function () {
@@ -64193,18 +64199,37 @@
 	    /**
 	    * Checks adjacent states, returning an array of states that are not adjacent
 	    * or an empty array if all the selected states are adjacent.
+	    * Accounts for states that do not have adjacent states (Alaska and Hawaii),
+	    * returning an empty array in that case.
 	    */
 	  }, {
 	    key: 'checkForExtraPickedStates',
 	    value: function checkForExtraPickedStates(stateToTest, selectedStates) {
 	      var adjacents = this.getAdjacentStates(stateToTest);
-	      return util.extraPickedStates(adjacents, selectedStates);
+	      //Check that the state has adjacent states
+	      if (constants.no_adjacent_states.indexOf(stateToTest) < 0) {
+	        return util.extraPickedStates(adjacents, selectedStates);
+	      } else {
+	        return []; //Alaska or Hawaii picked
+	      }
 	    }
+	
+	    /**
+	    * Checks adjacent states, returning an array of selected states that are not adjacent
+	    * or an empty array if all adjacent states were found in the selected states array.
+	    * Accounts for states that do not have adjacent states (Alaska and Hawaii),
+	    * returning an empty array in that case.
+	    */
 	  }, {
 	    key: 'checkForMissingPickedStates',
 	    value: function checkForMissingPickedStates(stateToTest, selectedStates) {
 	      var adjacents = this.getAdjacentStates(stateToTest);
-	      return util.missingPickedStates(adjacents, selectedStates);
+	      //Check that the state has adjacent states
+	      if (constants.no_adjacent_states.indexOf(stateToTest) < 0) {
+	        return util.missingPickedStates(adjacents, selectedStates);
+	      } else {
+	        return []; //Alaska or Hawaii picked
+	      }
 	    }
 	  }]);
 	
