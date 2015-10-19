@@ -50,6 +50,10 @@
 	// <style> tag in the head by default but can be changed
 	'use strict';
 	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	__webpack_require__(1);
@@ -91,25 +95,28 @@
 	
 	var _componentsAdjacentQuizAdjacentQuiz = __webpack_require__(32);
 	
-	var _componentsCapitalQuizCapitalQuiz = __webpack_require__(38);
+	var _componentsCapitalQuizCapitalQuiz = __webpack_require__(39);
 	
-	var _componentsStateDropdownStateDropdown = __webpack_require__(44);
+	var _componentsStateDropdownStateDropdown = __webpack_require__(45);
 	
-	var _componentsLoginLogin = __webpack_require__(50);
+	var _componentsQuizResultsMessageQuizResultsMessage = __webpack_require__(51);
 	
-	var _componentsPicklistPicklist = __webpack_require__(56);
+	var _componentsLoginLogin = __webpack_require__(57);
+	
+	var _componentsPicklistPicklist = __webpack_require__(63);
 	
 	var _componentsCommonStateService = __webpack_require__(28);
 	
-	var _componentsCommonUserService = __webpack_require__(54);
+	var _componentsCommonUserService = __webpack_require__(61);
 	
-	_angular2['default'].module('app', [_angularUiRouter2['default'], _angularAnimate2['default'], _angularCookies2['default'],
+	var app = _angular2['default'].module('app', [_angularUiRouter2['default'], _angularAnimate2['default'], _angularCookies2['default'],
 	// home is the module, the angular module
 	// because that's what we exported in home.js
 	// all angular modules have a name
 	// property who's value is the name you set the
 	// module to be
-	_componentsHomeHome.home.name, _componentsAdjacentAdjacent.adjacent.name, _componentsAdjacentQuizAdjacentQuiz.adjacentQuiz.name, _componentsCapitalQuizCapitalQuiz.capitalQuiz.name, _componentsPicklistPicklist.picklist.name, _componentsStateDropdownStateDropdown.stateDropdown.name, _componentsLoginLogin.login.name]).directive('app', _appDirective.appDirective).service('stateService', _componentsCommonStateService.StateService).service('userService', _componentsCommonUserService.UserService);
+	_componentsHomeHome.home.name, _componentsAdjacentAdjacent.adjacent.name, _componentsAdjacentQuizAdjacentQuiz.adjacentQuiz.name, _componentsCapitalQuizCapitalQuiz.capitalQuiz.name, _componentsPicklistPicklist.picklist.name, _componentsQuizResultsMessageQuizResultsMessage.quizResultsMessage.name, _componentsStateDropdownStateDropdown.stateDropdown.name, _componentsLoginLogin.login.name]).directive('app', _appDirective.appDirective).service('stateService', _componentsCommonStateService.StateService).service('userService', _componentsCommonUserService.UserService);
+	exports.app = app;
 
 /***/ },
 /* 1 */
@@ -62843,11 +62850,13 @@
 	
 	var _commonStateService = __webpack_require__(28);
 	
-	var _commonUtilities = __webpack_require__(36);
+	var _picklistPicklistService = __webpack_require__(36);
+	
+	var _commonUtilities = __webpack_require__(37);
 	
 	var util = _interopRequireWildcard(_commonUtilities);
 	
-	var _adjacentQuizHtml = __webpack_require__(37);
+	var _adjacentQuizHtml = __webpack_require__(38);
 	
 	var _adjacentQuizHtml2 = _interopRequireDefault(_adjacentQuizHtml);
 	
@@ -62867,58 +62876,41 @@
 	exports.adjacentQuizDirective = adjacentQuizDirective;
 	
 	var AdjacentQuizComponent = (function () {
-	  function AdjacentQuizComponent(stateService) {
+	  function AdjacentQuizComponent(stateService, picklistService) {
 	    var _this = this;
 	
 	    _classCallCheck(this, AdjacentQuizComponent);
 	
 	    this.service = stateService;
-	    this.greeting = 'AdjacentQuizComponent!';
+	    this.picklistService = picklistService;
 	    this.selectedState = {};
-	    this.answer = '';
-	    this.adjacentStates = [];
-	    this.resultMsg = '';
-	    this.missingPickedStates = [];
-	    this.wrongPickedStates = [];
-	    this.successMessage = '';
-	    this.pickedStates = [];
+	    /**
+	     * Get notified when selected state is changed using
+	     * RxJs
+	     */
 	    this.service.selectedStateSubject.subscribe(function (newSelectedState) {
 	      _this.selectedStateChanged(newSelectedState);
+	    });
+	
+	    this.resultsMessages = [];
+	
+	    /**
+	     * Get notified when results messages are changed using
+	     * RxJs
+	     */
+	    this.picklistService.resultsMessageSubject.subscribe(function (newResultsMessages) {
+	      _this.resultsMessages = newResultsMessages;
 	    });
 	  }
 	
 	  _createClass(AdjacentQuizComponent, [{
-	    key: 'submitAnswer',
-	    value: function submitAnswer() {
-	      console.log('submitAnswer() called with answer ' + this.answer);
-	      this.resultMsg = this.answer + ' is NOT an Adjacent State';
-	
-	      var adjacents = this.service.getAdjacentState(this.selectedState.name, this.adjacentStates);
-	      console.log("Adjacents: " + adjacents);
-	      for (var j = 0; j < adjacents.length; j++) {
-	        if (this.answer == adjacents[j]) {
-	          this.resultMsg = this.answer + ' IS an Adjacent State!!';
-	          break;
-	        }
-	      }
-	    }
-	  }, {
 	    key: 'clearResultsMessages',
 	    value: function clearResultsMessages() {
-	      this.wrongPickedStates = [];
-	      this.missingPickedStates = [];
-	      this.successMessage = '';
-	    }
-	  }, {
-	    key: 'setResultMessage',
-	    value: function setResultMessage(message) {
-	      this.resultMsg = message;
+	      this.resultsMessages = [];
 	    }
 	  }, {
 	    key: 'selectedStateChanged',
 	    value: function selectedStateChanged(newSelectedState) {
-	      var printVal = newSelectedState == null ? 'null' : newSelectedState.name;
-	      console.log('AdjacentQuizComponent subscriber selectedStateChanged() called with newSelectedState: ' + printVal);
 	      this.selectedState = newSelectedState;
 	      this.clearResultsMessages();
 	    }
@@ -62927,7 +62919,7 @@
 	  return AdjacentQuizComponent;
 	})();
 	
-	AdjacentQuizComponent.$inject = ['stateService'];
+	AdjacentQuizComponent.$inject = ['stateService', 'picklistService'];
 	
 	exports.AdjacentQuizComponent = AdjacentQuizComponent;
 
@@ -62973,6 +62965,122 @@
 
 /***/ },
 /* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var _angular = __webpack_require__(9);
+	
+	var _lodash = __webpack_require__(21);
+	
+	var _ = _interopRequireWildcard(_lodash);
+	
+	var _rx = __webpack_require__(29);
+	
+	var Rx = _interopRequireWildcard(_rx);
+	
+	var _commonUtilities = __webpack_require__(37);
+	
+	var util = _interopRequireWildcard(_commonUtilities);
+	
+	var _commonConstants = __webpack_require__(31);
+	
+	var constants = _interopRequireWildcard(_commonConstants);
+	
+	var _commonStateService = __webpack_require__(28);
+	
+	var PicklistService = (function () {
+	  function PicklistService($http, stateService) {
+	    _classCallCheck(this, PicklistService);
+	
+	    this.greeting = 'PicklistService!';
+	    this.http = $http;
+	    this.stateService = stateService;
+	    this.states = [];
+	
+	    /**
+	     * Use RxJS to notify observers of new results messages
+	     * when setResultsMessages() is called.
+	     */
+	    this.resultsMessageSubject = new Rx.BehaviorSubject(null);
+	  }
+	
+	  _createClass(PicklistService, [{
+	    key: 'queryStates',
+	    value: function queryStates() {
+	      return this.stateService.queryStates();
+	    }
+	
+	    /**
+	     * Gets all adjacent states to a given state (selectedState)
+	     */
+	  }, {
+	    key: 'getAdjacentStates',
+	    value: function getAdjacentStates(selectedState) {
+	      return this.stateService.getAdjacentStates(selectedState);
+	    }
+	  }, {
+	    key: 'setResultsMessages',
+	    value: function setResultsMessages(newMessages) {
+	      this.resultsMessageSubject.onNext(newMessages);
+	    }
+	
+	    /**
+	    * Checks adjacent states, returning an array of states that are not adjacent
+	    * or an empty array if all the selected states are adjacent.
+	    * Accounts for states that do not have adjacent states (Alaska and Hawaii),
+	    * returning an empty array in that case.
+	    */
+	  }, {
+	    key: 'checkForExtraPickedStates',
+	    value: function checkForExtraPickedStates(stateToTest, selectedStates) {
+	      var adjacents = this.getAdjacentStates(stateToTest);
+	      //Check that the state has adjacent states
+	      if (constants.no_adjacent_states.indexOf(stateToTest) < 0) {
+	        return util.extraPickedStates(adjacents, selectedStates);
+	      } else {
+	        return []; //Alaska or Hawaii picked
+	      }
+	    }
+	
+	    /**
+	    * Checks adjacent states, returning an array of selected states that are not adjacent
+	    * or an empty array if all adjacent states were found in the selected states array.
+	    * Accounts for states that do not have adjacent states (Alaska and Hawaii),
+	    * returning an empty array in that case.
+	    */
+	  }, {
+	    key: 'checkForMissingPickedStates',
+	    value: function checkForMissingPickedStates(stateToTest, selectedStates) {
+	      var adjacents = this.getAdjacentStates(stateToTest);
+	      //Check that the state has adjacent states
+	      if (constants.no_adjacent_states.indexOf(stateToTest) < 0) {
+	        return util.missingPickedStates(adjacents, selectedStates);
+	      } else {
+	        return []; //Alaska or Hawaii picked
+	      }
+	    }
+	  }]);
+	
+	  return PicklistService;
+	})();
+	
+	PicklistService.$inject = ['$http', 'stateService'];
+	
+	exports.PicklistService = PicklistService;
+
+/***/ },
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63125,13 +63233,13 @@
 	exports.randomArrayItem = randomArrayItem;
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"adjacentQuiz\">\n<div class=\"adjacent-quiz-wrapper\">\n  <h1>Do You Know Adjacent States?</h1> \n\n    <state-dropdown \n      component-id=\"adjacentStateSelectorId\"\n      component-label=\"Please Select a State\"\n     ></state-dropdown> \n\n    </br/>\n      \n  <picklist selected-state=\"vm.selectedState.name\"></picklist>\n  \n  <div class=\"results-box\">\n    <div class=\"results-box-wrapper\">\n      <div class=\"quiz-results-title\">Quiz Results</div>\n    </div>\n      <div class=\"quiz-results\">\n        <div class=\"\">\n          <span class=\"quiz-results-error\" \n            ng-show=\"vm.wrongPickedStates.length !== 0\">\n            These are not adjacent states: \n          </span>\n          {{vm.wrongPickedStates.length === 0 ? '' : vm.wrongPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-error\" ng-show=\"vm.missingPickedStates.length !== 0\">\n            You missed these adjacent states: \n          </span>\n          {{vm.missingPickedStates.length === 0 ? '' : vm.missingPickedStates}}\n        </div>\n        <div class=\"\">\n          <span class=\"quiz-results-success\" ng-show=\"vm.successMessage.length !== 0\">\n            {{vm.successMessage}}\n          </span>\n        </div>\n      </div>\n    </div>\n    <div>\n      <a class=\"cheatLink\" ui-sref=\"adjacent\">If you want to learn the adjacent states, click here</a>\n      or <a href=\"https://www.google.com/maps/place/United+States/\" target=\"_blank\">Check out Google Maps</a>\n    </div>        \n  </div>\n  \n</div>\n</section>\n"
+	module.exports = "<section class=\"adjacentQuiz\">\n<div class=\"adjacent-quiz-wrapper\">\n  <h1>Do You Know Adjacent States?</h1> \n\n    <state-dropdown \n      component-id=\"adjacentStateSelectorId\"\n      component-label=\"Please Select a State\"\n     ></state-dropdown> \n\n    </br/>\n      \n  <picklist selected-state=\"vm.selectedState.name\"></picklist>\n  \n  <quiz-results-message results-messages=\"vm.resultsMessages\"></quiz-results-message>\n  \n    <div>\n      <a class=\"cheatLink\" ui-sref=\"adjacent\">If you want to learn the adjacent states, click here</a>\n      or <a href=\"https://www.google.com/maps/place/United+States/\" target=\"_blank\">Check out Google Maps</a>\n    </div>        \n  </div>\n  \n</div>\n</section>\n"
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63142,9 +63250,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _capitalQuizComponent = __webpack_require__(39);
+	var _capitalQuizComponent = __webpack_require__(40);
 	
-	var _capitalQuizService = __webpack_require__(43);
+	var _capitalQuizService = __webpack_require__(44);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63163,7 +63271,7 @@
 	exports.capitalQuiz = capitalQuiz;
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63180,17 +63288,17 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(40);
+	__webpack_require__(41);
 	
-	var _capitalQuizComponent = __webpack_require__(39);
+	var _capitalQuizComponent = __webpack_require__(40);
 	
 	var _commonStateService = __webpack_require__(28);
 	
-	var _commonUtilities = __webpack_require__(36);
+	var _commonUtilities = __webpack_require__(37);
 	
 	var util = _interopRequireWildcard(_commonUtilities);
 	
-	var _capitalQuizHtml = __webpack_require__(42);
+	var _capitalQuizHtml = __webpack_require__(43);
 	
 	var _capitalQuizHtml2 = _interopRequireDefault(_capitalQuizHtml);
 	
@@ -63288,13 +63396,13 @@
 	exports.CapitalQuizComponent = CapitalQuizComponent;
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(41);
+	var content = __webpack_require__(42);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -63314,7 +63422,7 @@
 	}
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -63328,13 +63436,13 @@
 
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"capitalQuiz\">\n  <div class=\"capital-quiz-wrapper\">\n    <h1>{{ vm.title }}</h1>\n    <form novalidate>\n  \n      <div class=\"quiz-select-question\">          \n        <state-dropdown \n          component-id=\"stateSelectorId\"\n          component-label=\"What is the capital of:\"\n        ></state-dropdown> \n      </div>\n      \n      \t\n      <div class=\"quiz-select-answer\">\n        <label for=\"capitalSelect\">Select a capital:</label>\n        <select id=\"capitalSelect\" ng-model=\"vm.selectedCapital\"\n          ng-options=\"state.capital for state in vm.states | orderBy:'capital'\"></select>\n      </div>\n      <div class=\"quiz-submit\">\n        <button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected Capital </button> \n      </div> \n    </form>\n    <div class=\"results-box\">\n      <div class=\"results-box-wrapper\">\n        <div class=\"quiz-results-title\">Quiz Results</div>\n      </div>\n      <div class=\"quiz-results\">\n        {{ vm.uiMessage}}\n      </div>\n    </div>\n  </div>\n</section>\n"
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63375,7 +63483,7 @@
 	exports.CapitalQuizService = CapitalQuizService;
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63386,9 +63494,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _stateDropdownComponent = __webpack_require__(45);
+	var _stateDropdownComponent = __webpack_require__(46);
 	
-	var _stateDropdownService = __webpack_require__(49);
+	var _stateDropdownService = __webpack_require__(50);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63407,7 +63515,7 @@
 	exports.stateDropdown = stateDropdown;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63424,17 +63532,17 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(46);
+	__webpack_require__(47);
 	
-	var _stateDropdownComponent = __webpack_require__(45);
+	var _stateDropdownComponent = __webpack_require__(46);
 	
 	var _commonStateService = __webpack_require__(28);
 	
-	var _commonUtilities = __webpack_require__(36);
+	var _commonUtilities = __webpack_require__(37);
 	
 	var util = _interopRequireWildcard(_commonUtilities);
 	
-	var _stateDropdownHtml = __webpack_require__(48);
+	var _stateDropdownHtml = __webpack_require__(49);
 	
 	var _stateDropdownHtml2 = _interopRequireDefault(_stateDropdownHtml);
 	
@@ -63509,13 +63617,13 @@
 	exports.StateDropdownComponent = StateDropdownComponent;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(47);
+	var content = __webpack_require__(48);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -63535,7 +63643,7 @@
 	}
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -63549,13 +63657,13 @@
 
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"stateDropdown\">\n\n  <!-- Usage:\n  The 'state' argument is a State object with a name property\n    <state-dropdown \n      component-id=\"<component id attribute>\"\n      component-label=\"<component label text>\"\n     ></state-dropdown> \n   -->\n\n  <form novalidate>\n\n  \t<label id=\"{{ vm.componentId }}Label\" for=\"{{ vm.componentId }}\">\n      <span style=\"font-weight:bold;\">{{ vm.componentLabel }}</span>\n    </label>\n  \t<select id=\"{{ vm.componentId }}\" ng-model=\"vm.selectedState\"\n  \t\tng-options=\"state.name for state in vm.states\"\n      ng-click=\"vm.onClick()\"></select>\n  \t<br/>\t\n  </form>\n\n\n</section>\n"
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63596,7 +63704,177 @@
 	exports.StateDropdownService = StateDropdownService;
 
 /***/ },
-/* 50 */
+/* 51 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _quizResultsMessageComponent = __webpack_require__(52);
+	
+	var _quizResultsMessageService = __webpack_require__(55);
+	
+	var _angular = __webpack_require__(9);
+	
+	var _angular2 = _interopRequireDefault(_angular);
+	
+	var _angularUiRouter = __webpack_require__(11);
+	
+	var _angularUiRouter2 = _interopRequireDefault(_angularUiRouter);
+	
+	var quizResultsMessage = _angular2['default'].module('quizResultsMessage', [_angularUiRouter2['default']]).config(function ($stateProvider) {
+	  $stateProvider.state('quizResultsMessage', {
+	    url: '/quizResultsMessage',
+	    template: '<quiz-results-message></quiz-results-message>'
+	  });
+	}).directive('quizResultsMessage', _quizResultsMessageComponent.quizResultsMessageDirective).service('quizResultsMessageService', _quizResultsMessageService.QuizResultsMessageService);
+	exports.quizResultsMessage = quizResultsMessage;
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	__webpack_require__(53);
+	
+	var _quizResultsMessageComponent = __webpack_require__(52);
+	
+	var _quizResultsMessageService = __webpack_require__(55);
+	
+	var _quizResultsMessageHtml = __webpack_require__(56);
+	
+	var _quizResultsMessageHtml2 = _interopRequireDefault(_quizResultsMessageHtml);
+	
+	var quizResultsMessageDirective = function quizResultsMessageDirective() {
+	  return {
+	    controller: _quizResultsMessageComponent.QuizResultsMessageComponent,
+	    template: _quizResultsMessageHtml2['default'],
+	    controllerAs: 'vm',
+	    scope: {
+	      resultsMessages: '=' //array of ResultsMessage objects
+	    },
+	    replace: true,
+	    bindToController: true,
+	    restrict: 'E'
+	  };
+	};
+	
+	exports.quizResultsMessageDirective = quizResultsMessageDirective;
+	
+	var QuizResultsMessageComponent = function QuizResultsMessageComponent(quizResultsMessageService) {
+	  _classCallCheck(this, QuizResultsMessageComponent);
+	
+	  this.title = 'Quiz Results';
+	  this.service = quizResultsMessageService;
+	};
+	
+	QuizResultsMessageComponent.$inject = ['quizResultsMessageService'];
+	
+	exports.QuizResultsMessageComponent = QuizResultsMessageComponent;
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(54);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(4)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/stylus-loader/index.js!./quizResultsMessage.styl", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/stylus-loader/index.js!./quizResultsMessage.styl");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(3)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".quizResultsMessage {\n  position: relative;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  border-radius: 10px;\n  margin-top: 1rem;\n  width: 100%;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-results-failure {\n  color: #f00;\n}\n.quiz-results-success {\n  color: #008000;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 55 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	
+	var _angular = __webpack_require__(9);
+	
+	var _angular2 = _interopRequireDefault(_angular);
+	
+	var QuizResultsMessageService = (function () {
+	  function QuizResultsMessageService() {
+	    _classCallCheck(this, QuizResultsMessageService);
+	
+	    this.greeting = 'QuizResultsMessageService!';
+	  }
+	
+	  _createClass(QuizResultsMessageService, [{
+	    key: 'getGreeting',
+	    value: function getGreeting() {
+	      return this.greeting;
+	    }
+	  }]);
+	
+	  return QuizResultsMessageService;
+	})();
+	
+	QuizResultsMessageService.$inject = [];
+	
+	exports.QuizResultsMessageService = QuizResultsMessageService;
+
+/***/ },
+/* 56 */
+/***/ function(module, exports) {
+
+	module.exports = "<section class=\"quizResultsMessage\">\n\n  <div class=\"results-box\">\n    <div class=\"results-box-wrapper\">\n      <div class=\"quiz-results-title\">{{ vm.title }}</div>\n    </div>\n      <div class=\"quiz-results\" ng-repeat=\"message in vm.resultsMessages\">\n        <div class=\"\">\n          \n          <span style=\"{{ message.messageType.style }}\" >\n            {{ message.title }} \n          </span>\n            {{ message.content }}\n             \n        </div>\n\n      </div>        \n  </div>\n\n</section>\n"
+
+/***/ },
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//import {loginDirective} from './login.directive';
@@ -63608,7 +63886,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _loginComponent = __webpack_require__(51);
+	var _loginComponent = __webpack_require__(58);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63627,7 +63905,7 @@
 	exports.login = login;
 
 /***/ },
-/* 51 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63642,13 +63920,13 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(52);
+	__webpack_require__(59);
 	
-	var _loginComponent = __webpack_require__(51);
+	var _loginComponent = __webpack_require__(58);
 	
-	var _commonUserService = __webpack_require__(54);
+	var _commonUserService = __webpack_require__(61);
 	
-	var _loginHtml = __webpack_require__(55);
+	var _loginHtml = __webpack_require__(62);
 	
 	var _loginHtml2 = _interopRequireDefault(_loginHtml);
 	
@@ -63693,13 +63971,13 @@
 	exports.LoginComponent = LoginComponent;
 
 /***/ },
-/* 52 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(53);
+	var content = __webpack_require__(60);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -63719,7 +63997,7 @@
 	}
 
 /***/ },
-/* 53 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -63733,7 +64011,7 @@
 
 
 /***/ },
-/* 54 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63832,13 +64110,13 @@
 	exports.UserService = UserService;
 
 /***/ },
-/* 55 */
+/* 62 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"login\">\n  <div class=\"login-wrapper\">\n  <h3>Login</h3>\n\t\t<form novalidate>\n      <fieldset class=\"input-fieldset\">\n          <div class=\"login-itemr\">\n            <label for=\"usernameText\">User name:</label>\n            <input type=\"text\"  ng-model=\"vm.username\" \n            \tid=\"usernameText\" placeholder=\"Enter username\">\n          </div>\n          <div class=\"login-item\">\n            <label for=\"passwordText\">Password:</label>\n            <input type=\"password\" ng-model=\"vm.password\" \n            \tid=\"passwordText\" placeholder=\"Enter password\">\n          </div>\n      </fieldset>\n          <div class=\"login-item login-button\">\n            <button type=\"submit\" class=\"\"\n              ng-click=\"vm.login()\">Login</button>\n          </div>\n      </form>\n    </div>\n</section>\n"
 
 /***/ },
-/* 56 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63849,9 +64127,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _picklistComponent = __webpack_require__(57);
+	var _picklistComponent = __webpack_require__(64);
 	
-	var _picklistService = __webpack_require__(60);
+	var _picklistService = __webpack_require__(36);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63870,7 +64148,7 @@
 	exports.picklist = picklist;
 
 /***/ },
-/* 57 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63887,21 +64165,23 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(58);
+	__webpack_require__(65);
 	
-	var _picklistComponent = __webpack_require__(57);
+	var _picklistComponent = __webpack_require__(64);
 	
-	var _picklistService = __webpack_require__(60);
+	var _picklistService = __webpack_require__(36);
 	
 	var _commonStateService = __webpack_require__(28);
 	
-	var _commonUtilities = __webpack_require__(36);
+	var _quizResultsMessageResultsMessage = __webpack_require__(67);
+	
+	var _commonUtilities = __webpack_require__(37);
 	
 	var util = _interopRequireWildcard(_commonUtilities);
 	
 	var _angular = __webpack_require__(9);
 	
-	var _picklistHtml = __webpack_require__(61);
+	var _picklistHtml = __webpack_require__(68);
 	
 	var _picklistHtml2 = _interopRequireDefault(_picklistHtml);
 	
@@ -63931,6 +64211,7 @@
 	    this.scope = $scope;
 	    this.service = picklistService;
 	    this.stateService = stateService;
+	
 	    /**
 	     * List of states fetched from the server
 	     */
@@ -63953,14 +64234,6 @@
 	     * Selected items in the left list
 	     */
 	    this.leftSelected = [];
-	    /**
-	     * States selected that are not adjacent states
-	     */
-	    this.extraPickedStates = [];
-	    /**
-	     * Adjacent states NOT selected 
-	     */
-	    this.missingPickedStates = [];
 	    /**
 	     * Query to fill left select list
 	     */
@@ -64034,45 +64307,39 @@
 	    value: function allStatesDeleted() {
 	      this.rightSelections = [];
 	    }
-	
-	    /**
-	     * Check candidate adjacent states against the real adjacent states 
-	     * noting ones are are erroneously selected or are missing. 
-	     */
 	  }, {
 	    key: 'checkSelected',
 	    value: function checkSelected() {
+	      //clear previous values
+	      var resultsMessages = [];
 	      try {
-	        //clear previous values
-	        this.clearParentMessages();
 	        // erroneously picked adjacent states
-	        this.extraPickedStates = this.service.checkForExtraPickedStates(this.selectedState, this.rightSelections);
+	        var extraPickedStates = this.service.checkForExtraPickedStates(this.selectedState, this.rightSelections);
+	        if (extraPickedStates && extraPickedStates.length != 0) {
+	          resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('Selected states that are not adjacent: ', _quizResultsMessageResultsMessage.ResultsMessageType.failure, extraPickedStates));
+	        }
 	        // adjacent states not picked
-	        this.missingPickedStates = this.service.checkForMissingPickedStates(this.selectedState, this.rightSelections);
-	        if (this.extraPickedStates && this.extraPickedStates.length != 0) {
-	          this.scope.$parent.vm.wrongPickedStates = this.extraPickedStates;
+	        var missingPickedStates = this.service.checkForMissingPickedStates(this.selectedState, this.rightSelections);
+	        if (missingPickedStates && missingPickedStates.length != 0) {
+	          resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('Adjacent states not selected: ', _quizResultsMessageResultsMessage.ResultsMessageType.failure, missingPickedStates));
 	        }
-	        if (this.missingPickedStates && this.missingPickedStates.length != 0) {
-	          this.scope.$parent.vm.missingPickedStates = this.missingPickedStates;
-	        }
-	        if (this.extraPickedStates && this.extraPickedStates.length === 0 && (this.missingPickedStates && this.missingPickedStates.length === 0)) {
-	          this.scope.$parent.vm.successMessage = 'All adjacent states you selected are correct';
+	
+	        if (extraPickedStates && extraPickedStates.length === 0 && (missingPickedStates && missingPickedStates.length === 0)) {
+	          //center the results message
+	          _quizResultsMessageResultsMessage.ResultsMessageType.success.style = 'color:green;margin:0 auto;text-align:center';
+	          resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('All adjacent states you selected are correct', _quizResultsMessageResultsMessage.ResultsMessageType.success));
 	        }
 	      } catch (error) {
 	        console.log("Error in checkSelected(): ", error);
-	        this.scope.$parent.vm.successMessage = error.message;
+	        // this.scope.$parent.vm.successMessage = error.message;
+	        resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('Error processing adjacent state selections: ', _quizResultsMessageResultsMessage.ResultsMessageType.failure, error.message));
 	      }
+	      this.setResultsMessages(resultsMessages);
 	    }
-	
-	    /**
-	     * Clears messages on the parent page. 
-	     */
 	  }, {
-	    key: 'clearParentMessages',
-	    value: function clearParentMessages() {
-	      this.scope.$parent.vm.wrongPickedStates = [];
-	      this.scope.$parent.vm.missingPickedStates = [];
-	      this.scope.$parent.vm.successMessage = '';
+	    key: 'setResultsMessages',
+	    value: function setResultsMessages(newMessages) {
+	      this.service.setResultsMessages(newMessages);
 	    }
 	
 	    /**
@@ -64100,13 +64367,13 @@
 	exports.PicklistComponent = PicklistComponent;
 
 /***/ },
-/* 58 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(59);
+	var content = __webpack_require__(66);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -64126,7 +64393,7 @@
 	}
 
 /***/ },
-/* 59 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -64140,108 +64407,56 @@
 
 
 /***/ },
-/* 60 */
-/***/ function(module, exports, __webpack_require__) {
+/* 67 */
+/***/ function(module, exports) {
 
-	'use strict';
+	/**
+	 * Holds code related to a quiz results message for use in all quizzes.
+	 */
 	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
+	/**
+	 * Encapsulates the type of quiz results message.
+	 */
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+	var ResultsMessageType = {
+		success: { name: "success", style: "color:green" },
+		failure: { name: "failure", style: "color:red" },
+		warning: { name: "warning", style: "color:yellow" },
+		info: { name: "info", style: "color:blue" },
+		normal: { name: "normal", style: "color:black" }
+	};
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+	exports.ResultsMessageType = ResultsMessageType;
+	/**
+	 * Encapsulates quiz results message data
+	 * @title message title
+	 * @messageType message type including CSS styling info
+	 * @content content of the message 
+	 */
 	
-	var _angular = __webpack_require__(9);
+	var ResultsMessage = function ResultsMessage() {
+		var title = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+		var messageType = arguments.length <= 1 || arguments[1] === undefined ? ResultsMessageType.normal : arguments[1];
+		var content = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
 	
-	var _lodash = __webpack_require__(21);
+		_classCallCheck(this, ResultsMessage);
 	
-	var _ = _interopRequireWildcard(_lodash);
+		this.title = title;
+		this.messageType = messageType;
+		this.content = content;
+	};
 	
-	var _commonUtilities = __webpack_require__(36);
-	
-	var util = _interopRequireWildcard(_commonUtilities);
-	
-	var _commonConstants = __webpack_require__(31);
-	
-	var constants = _interopRequireWildcard(_commonConstants);
-	
-	var _commonStateService = __webpack_require__(28);
-	
-	var PicklistService = (function () {
-	  function PicklistService($http, stateService) {
-	    _classCallCheck(this, PicklistService);
-	
-	    this.greeting = 'PicklistService!';
-	    this.http = $http;
-	    this.stateService = stateService;
-	    this.states = [];
-	  }
-	
-	  _createClass(PicklistService, [{
-	    key: 'queryStates',
-	    value: function queryStates() {
-	      return this.stateService.queryStates();
-	    }
-	
-	    /**
-	     * Gets all adjacent states to a given state (selectedState)
-	     */
-	  }, {
-	    key: 'getAdjacentStates',
-	    value: function getAdjacentStates(selectedState) {
-	      return this.stateService.getAdjacentStates(selectedState);
-	    }
-	
-	    /**
-	    * Checks adjacent states, returning an array of states that are not adjacent
-	    * or an empty array if all the selected states are adjacent.
-	    * Accounts for states that do not have adjacent states (Alaska and Hawaii),
-	    * returning an empty array in that case.
-	    */
-	  }, {
-	    key: 'checkForExtraPickedStates',
-	    value: function checkForExtraPickedStates(stateToTest, selectedStates) {
-	      var adjacents = this.getAdjacentStates(stateToTest);
-	      //Check that the state has adjacent states
-	      if (constants.no_adjacent_states.indexOf(stateToTest) < 0) {
-	        return util.extraPickedStates(adjacents, selectedStates);
-	      } else {
-	        return []; //Alaska or Hawaii picked
-	      }
-	    }
-	
-	    /**
-	    * Checks adjacent states, returning an array of selected states that are not adjacent
-	    * or an empty array if all adjacent states were found in the selected states array.
-	    * Accounts for states that do not have adjacent states (Alaska and Hawaii),
-	    * returning an empty array in that case.
-	    */
-	  }, {
-	    key: 'checkForMissingPickedStates',
-	    value: function checkForMissingPickedStates(stateToTest, selectedStates) {
-	      var adjacents = this.getAdjacentStates(stateToTest);
-	      //Check that the state has adjacent states
-	      if (constants.no_adjacent_states.indexOf(stateToTest) < 0) {
-	        return util.missingPickedStates(adjacents, selectedStates);
-	      } else {
-	        return []; //Alaska or Hawaii picked
-	      }
-	    }
-	  }]);
-	
-	  return PicklistService;
-	})();
-	
-	PicklistService.$inject = ['$http', 'stateService'];
-	
-	exports.PicklistService = PicklistService;
+	exports.ResultsMessage = ResultsMessage;
 
 /***/ },
-/* 61 */
+/* 68 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"picklist\">\n<h3>{{ vm.greeting }}</h3>\n  <form novalidate>\n\t<div class=\"picklist-wrapper\">\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.leftSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.states\"></select>\n\t\t</div>\n\t\t<div class=\"picklist-buttons\">\t\n\t\t\t<button ng-click=\"vm.statePicked()\"><span class=\"picklist-controls\"> -&gt; </span></button>\n\t\t\t<button ng-click=\"vm.stateDeleted()\"><span class=\"picklist-controls\"> &lt;- </span></button>\n\t\t\t<button ng-click=\"vm.allStatesDeleted()\"><span class=\"picklist-controls\"> &lt;&lt;- </span></button>\n\t\t</div>\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.rightSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.rightSelections\"></select>\n\n\t\t</div>\n\t</div>\n\t<div class=\"\">\n\t\t<button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected States </button> \n\t</div> \n  </form>\n</section>\n"
