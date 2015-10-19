@@ -97,17 +97,17 @@
 	
 	var _componentsCapitalQuizCapitalQuiz = __webpack_require__(39);
 	
-	var _componentsStateDropdownStateDropdown = __webpack_require__(45);
+	var _componentsStateDropdownStateDropdown = __webpack_require__(46);
 	
-	var _componentsQuizResultsMessageQuizResultsMessage = __webpack_require__(51);
+	var _componentsQuizResultsMessageQuizResultsMessage = __webpack_require__(52);
 	
-	var _componentsLoginLogin = __webpack_require__(57);
+	var _componentsLoginLogin = __webpack_require__(58);
 	
-	var _componentsPicklistPicklist = __webpack_require__(63);
+	var _componentsPicklistPicklist = __webpack_require__(64);
 	
 	var _componentsCommonStateService = __webpack_require__(28);
 	
-	var _componentsCommonUserService = __webpack_require__(61);
+	var _componentsCommonUserService = __webpack_require__(62);
 	
 	var app = _angular2['default'].module('app', [_angularUiRouter2['default'], _angularAnimate2['default'], _angularCookies2['default'],
 	// home is the module, the angular module
@@ -62783,7 +62783,7 @@
 	// let webservice_ext = ''; //uses server-side mongo db
 	var webservice_ext = '.json'; //uses local json file
 	var deployment_context = '/state-geo-quiz'; //deploy in Tomcat
-	//let deployment_context = ''; //deploy locally in dist folder
+	// let deployment_context = ''; //deploy locally in dist folder
 	
 	var webservice_url = {
 		states: deployment_context + "/states" + webservice_ext,
@@ -63252,7 +63252,7 @@
 	
 	var _capitalQuizComponent = __webpack_require__(40);
 	
-	var _capitalQuizService = __webpack_require__(44);
+	var _capitalQuizService = __webpack_require__(45);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63294,11 +63294,13 @@
 	
 	var _commonStateService = __webpack_require__(28);
 	
+	var _quizResultsMessageResultsMessage = __webpack_require__(43);
+	
 	var _commonUtilities = __webpack_require__(37);
 	
 	var util = _interopRequireWildcard(_commonUtilities);
 	
-	var _capitalQuizHtml = __webpack_require__(43);
+	var _capitalQuizHtml = __webpack_require__(44);
 	
 	var _capitalQuizHtml2 = _interopRequireDefault(_capitalQuizHtml);
 	
@@ -63328,12 +63330,15 @@
 	    this.selectedState = {};
 	    this.states = [];
 	    this.selectedCapital = {};
-	    this.uiMessage = '';
 	    this.populatePageData();
-	
+	    /**
+	     * Register as an RxJs observer of selectedState changes
+	     */
 	    this.service.selectedStateSubject.subscribe(function (newSelectedState) {
 	      _this.selectedStateChanged(newSelectedState);
 	    });
+	
+	    this.resultsMessages = [];
 	  }
 	
 	  _createClass(CapitalQuizComponent, [{
@@ -63353,8 +63358,6 @@
 	  }, {
 	    key: 'selectedStateChanged',
 	    value: function selectedStateChanged(newSelectedState) {
-	      var printVal = newSelectedState == null ? 'null' : newSelectedState.name;
-	      console.log('CapitalQuizComponent subscriber selectedStateChanged() called with newSelectedState: ' + printVal);
 	      //Set selectedState to new value
 	      this.selectedState = newSelectedState;
 	      this.resetSelectedCapital();
@@ -63367,24 +63370,27 @@
 	  }, {
 	    key: 'checkSelected',
 	    value: function checkSelected() {
+	      var resultsMessages = [];
 	      try {
 	        var selectedCapitalCorrect = this.service.checkSelectedCapital(this.selectedState, this.selectedCapital);
-	        console.log("Correct capital: " + this.selectedCapitalCorrect);
+	
 	        if (selectedCapitalCorrect) {
-	          this.uiMessage = 'Selected capital is correct';
+	          resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('Selected capital is correct', _quizResultsMessageResultsMessage.ResultsMessageType.success));
 	        } else {
-	          this.uiMessage = 'Selected capital is NOT correct';
+	          resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('Selected capital is NOT correct', _quizResultsMessageResultsMessage.ResultsMessageType.failure));
 	        }
 	      } catch (error) {
 	        console.log("Error in CapitalQuizComponent.checkSelected(): ", error);
-	        this.uiMessage = error.message;
+	        resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('Error in CapitalQuizComponent.checkSelected(): ', _quizResultsMessageResultsMessage.ResultsMessageType.failure, error.message));
 	      }
+	
+	      this.resultsMessages = resultsMessages;
 	    }
 	  }, {
 	    key: 'resetSelectedCapital',
 	    value: function resetSelectedCapital() {
 	      this.selectedCapital = {};
-	      this.uiMessage = '';
+	      this.resultsMessages = [];
 	    }
 	  }]);
 	
@@ -63439,10 +63445,59 @@
 /* 43 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"capitalQuiz\">\n  <div class=\"capital-quiz-wrapper\">\n    <h1>{{ vm.title }}</h1>\n    <form novalidate>\n  \n      <div class=\"quiz-select-question\">          \n        <state-dropdown \n          component-id=\"stateSelectorId\"\n          component-label=\"What is the capital of:\"\n        ></state-dropdown> \n      </div>\n      \n      \t\n      <div class=\"quiz-select-answer\">\n        <label for=\"capitalSelect\">Select a capital:</label>\n        <select id=\"capitalSelect\" ng-model=\"vm.selectedCapital\"\n          ng-options=\"state.capital for state in vm.states | orderBy:'capital'\"></select>\n      </div>\n      <div class=\"quiz-submit\">\n        <button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected Capital </button> \n      </div> \n    </form>\n    <div class=\"results-box\">\n      <div class=\"results-box-wrapper\">\n        <div class=\"quiz-results-title\">Quiz Results</div>\n      </div>\n      <div class=\"quiz-results\">\n        {{ vm.uiMessage}}\n      </div>\n    </div>\n  </div>\n</section>\n"
+	/**
+	 * Holds code related to a quiz results message for use in all quizzes.
+	 */
+	
+	/**
+	 * Encapsulates the type of quiz results message.
+	 */
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ResultsMessageType = {
+		success: { name: "success", style: "color:green" },
+		failure: { name: "failure", style: "color:red" },
+		warning: { name: "warning", style: "color:yellow" },
+		info: { name: "info", style: "color:blue" },
+		normal: { name: "normal", style: "color:black" }
+	};
+	
+	exports.ResultsMessageType = ResultsMessageType;
+	/**
+	 * Encapsulates quiz results message data
+	 * @title message title
+	 * @messageType message type including CSS styling info
+	 * @content content of the message 
+	 */
+	
+	var ResultsMessage = function ResultsMessage() {
+		var title = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
+		var messageType = arguments.length <= 1 || arguments[1] === undefined ? ResultsMessageType.normal : arguments[1];
+		var content = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+	
+		_classCallCheck(this, ResultsMessage);
+	
+		this.title = title;
+		this.messageType = messageType;
+		this.content = content;
+	};
+	
+	exports.ResultsMessage = ResultsMessage;
 
 /***/ },
 /* 44 */
+/***/ function(module, exports) {
+
+	module.exports = "<section class=\"capitalQuiz\">\n  <div class=\"capital-quiz-wrapper\">\n    <h1>{{ vm.title }}</h1>\n    <form novalidate>\n  \n      <div class=\"quiz-select-question\">          \n        <state-dropdown \n          component-id=\"stateSelectorId\"\n          component-label=\"What is the capital of:\"\n        ></state-dropdown> \n      </div>\n      \n      \t\n      <div class=\"quiz-select-answer\">\n        <label for=\"capitalSelect\">Select a capital:</label>\n        <select id=\"capitalSelect\" ng-model=\"vm.selectedCapital\"\n          ng-options=\"state.capital for state in vm.states | orderBy:'capital'\"></select>\n      </div>\n      <div class=\"quiz-submit\">\n        <button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected Capital </button> \n      </div> \n    </form>\n \n    <quiz-results-message results-messages=\"vm.resultsMessages\"></quiz-results-message>\n    \n  </div>\n</section>\n"
+
+/***/ },
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63483,7 +63538,7 @@
 	exports.CapitalQuizService = CapitalQuizService;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63494,9 +63549,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _stateDropdownComponent = __webpack_require__(46);
+	var _stateDropdownComponent = __webpack_require__(47);
 	
-	var _stateDropdownService = __webpack_require__(50);
+	var _stateDropdownService = __webpack_require__(51);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63515,7 +63570,7 @@
 	exports.stateDropdown = stateDropdown;
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63532,9 +63587,9 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(47);
+	__webpack_require__(48);
 	
-	var _stateDropdownComponent = __webpack_require__(46);
+	var _stateDropdownComponent = __webpack_require__(47);
 	
 	var _commonStateService = __webpack_require__(28);
 	
@@ -63542,7 +63597,7 @@
 	
 	var util = _interopRequireWildcard(_commonUtilities);
 	
-	var _stateDropdownHtml = __webpack_require__(49);
+	var _stateDropdownHtml = __webpack_require__(50);
 	
 	var _stateDropdownHtml2 = _interopRequireDefault(_stateDropdownHtml);
 	
@@ -63617,13 +63672,13 @@
 	exports.StateDropdownComponent = StateDropdownComponent;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(48);
+	var content = __webpack_require__(49);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -63643,7 +63698,7 @@
 	}
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -63657,13 +63712,13 @@
 
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"stateDropdown\">\n\n  <!-- Usage:\n  The 'state' argument is a State object with a name property\n    <state-dropdown \n      component-id=\"<component id attribute>\"\n      component-label=\"<component label text>\"\n     ></state-dropdown> \n   -->\n\n  <form novalidate>\n\n  \t<label id=\"{{ vm.componentId }}Label\" for=\"{{ vm.componentId }}\">\n      <span style=\"font-weight:bold;\">{{ vm.componentLabel }}</span>\n    </label>\n  \t<select id=\"{{ vm.componentId }}\" ng-model=\"vm.selectedState\"\n  \t\tng-options=\"state.name for state in vm.states\"\n      ng-click=\"vm.onClick()\"></select>\n  \t<br/>\t\n  </form>\n\n\n</section>\n"
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63704,7 +63759,7 @@
 	exports.StateDropdownService = StateDropdownService;
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63715,9 +63770,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _quizResultsMessageComponent = __webpack_require__(52);
+	var _quizResultsMessageComponent = __webpack_require__(53);
 	
-	var _quizResultsMessageService = __webpack_require__(55);
+	var _quizResultsMessageService = __webpack_require__(56);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63736,7 +63791,7 @@
 	exports.quizResultsMessage = quizResultsMessage;
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63749,13 +63804,13 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(53);
+	__webpack_require__(54);
 	
-	var _quizResultsMessageComponent = __webpack_require__(52);
+	var _quizResultsMessageComponent = __webpack_require__(53);
 	
-	var _quizResultsMessageService = __webpack_require__(55);
+	var _quizResultsMessageService = __webpack_require__(56);
 	
-	var _quizResultsMessageHtml = __webpack_require__(56);
+	var _quizResultsMessageHtml = __webpack_require__(57);
 	
 	var _quizResultsMessageHtml2 = _interopRequireDefault(_quizResultsMessageHtml);
 	
@@ -63787,13 +63842,13 @@
 	exports.QuizResultsMessageComponent = QuizResultsMessageComponent;
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(54);
+	var content = __webpack_require__(55);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -63813,7 +63868,7 @@
 	}
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -63827,7 +63882,7 @@
 
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63868,13 +63923,13 @@
 	exports.QuizResultsMessageService = QuizResultsMessageService;
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"quizResultsMessage\">\n\n  <div class=\"results-box\">\n    <div class=\"results-box-wrapper\">\n      <div class=\"quiz-results-title\">{{ vm.title }}</div>\n    </div>\n      <div class=\"quiz-results\" ng-repeat=\"message in vm.resultsMessages\">\n        <div class=\"\">\n          \n          <span style=\"{{ message.messageType.style }}\" >\n            {{ message.title }} \n          </span>\n            {{ message.content }}\n             \n        </div>\n\n      </div>        \n  </div>\n\n</section>\n"
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	//import {loginDirective} from './login.directive';
@@ -63886,7 +63941,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _loginComponent = __webpack_require__(58);
+	var _loginComponent = __webpack_require__(59);
 	
 	var _angular = __webpack_require__(9);
 	
@@ -63905,7 +63960,7 @@
 	exports.login = login;
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -63920,13 +63975,13 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(59);
+	__webpack_require__(60);
 	
-	var _loginComponent = __webpack_require__(58);
+	var _loginComponent = __webpack_require__(59);
 	
-	var _commonUserService = __webpack_require__(61);
+	var _commonUserService = __webpack_require__(62);
 	
-	var _loginHtml = __webpack_require__(62);
+	var _loginHtml = __webpack_require__(63);
 	
 	var _loginHtml2 = _interopRequireDefault(_loginHtml);
 	
@@ -63971,13 +64026,13 @@
 	exports.LoginComponent = LoginComponent;
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(60);
+	var content = __webpack_require__(61);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -63997,7 +64052,7 @@
 	}
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -64011,7 +64066,7 @@
 
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64110,13 +64165,13 @@
 	exports.UserService = UserService;
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports) {
 
 	module.exports = "<section class=\"login\">\n  <div class=\"login-wrapper\">\n  <h3>Login</h3>\n\t\t<form novalidate>\n      <fieldset class=\"input-fieldset\">\n          <div class=\"login-itemr\">\n            <label for=\"usernameText\">User name:</label>\n            <input type=\"text\"  ng-model=\"vm.username\" \n            \tid=\"usernameText\" placeholder=\"Enter username\">\n          </div>\n          <div class=\"login-item\">\n            <label for=\"passwordText\">Password:</label>\n            <input type=\"password\" ng-model=\"vm.password\" \n            \tid=\"passwordText\" placeholder=\"Enter password\">\n          </div>\n      </fieldset>\n          <div class=\"login-item login-button\">\n            <button type=\"submit\" class=\"\"\n              ng-click=\"vm.login()\">Login</button>\n          </div>\n      </form>\n    </div>\n</section>\n"
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64127,7 +64182,7 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _picklistComponent = __webpack_require__(64);
+	var _picklistComponent = __webpack_require__(65);
 	
 	var _picklistService = __webpack_require__(36);
 	
@@ -64148,7 +64203,7 @@
 	exports.picklist = picklist;
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -64165,15 +64220,15 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	__webpack_require__(65);
+	__webpack_require__(66);
 	
-	var _picklistComponent = __webpack_require__(64);
+	var _picklistComponent = __webpack_require__(65);
 	
 	var _picklistService = __webpack_require__(36);
 	
 	var _commonStateService = __webpack_require__(28);
 	
-	var _quizResultsMessageResultsMessage = __webpack_require__(67);
+	var _quizResultsMessageResultsMessage = __webpack_require__(43);
 	
 	var _commonUtilities = __webpack_require__(37);
 	
@@ -64367,13 +64422,13 @@
 	exports.PicklistComponent = PicklistComponent;
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(66);
+	var content = __webpack_require__(67);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(4)(content, {});
@@ -64393,7 +64448,7 @@
 	}
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(3)();
@@ -64405,55 +64460,6 @@
 	
 	// exports
 
-
-/***/ },
-/* 67 */
-/***/ function(module, exports) {
-
-	/**
-	 * Holds code related to a quiz results message for use in all quizzes.
-	 */
-	
-	/**
-	 * Encapsulates the type of quiz results message.
-	 */
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var ResultsMessageType = {
-		success: { name: "success", style: "color:green" },
-		failure: { name: "failure", style: "color:red" },
-		warning: { name: "warning", style: "color:yellow" },
-		info: { name: "info", style: "color:blue" },
-		normal: { name: "normal", style: "color:black" }
-	};
-	
-	exports.ResultsMessageType = ResultsMessageType;
-	/**
-	 * Encapsulates quiz results message data
-	 * @title message title
-	 * @messageType message type including CSS styling info
-	 * @content content of the message 
-	 */
-	
-	var ResultsMessage = function ResultsMessage() {
-		var title = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-		var messageType = arguments.length <= 1 || arguments[1] === undefined ? ResultsMessageType.normal : arguments[1];
-		var content = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
-	
-		_classCallCheck(this, ResultsMessage);
-	
-		this.title = title;
-		this.messageType = messageType;
-		this.content = content;
-	};
-	
-	exports.ResultsMessage = ResultsMessage;
 
 /***/ },
 /* 68 */
