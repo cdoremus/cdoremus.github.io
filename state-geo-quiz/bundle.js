@@ -502,7 +502,7 @@
 	exports.push([module.id, "@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700);", ""]);
 	
 	// module
-	exports.push([module.id, "html,\nbody {\n  height: 100%;\n}\nbody {\n  font-family: 'Roboto', sans-serif;\n  background-color: #efefef;\n}\nbody * {\n  box-sizing: border-box;\n}\na {\n  color: #fff;\n  text-decoration: none;\n}\na:visited {\n  color: #fff;\n}\na:hover,\na:active {\n  text-decoration: none;\n}\n#app header nav {\n  height: 75px;\n  background-color: #27279e;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n  z-index: 99999;\n  position: fixed;\n  min-width: 100%;\n  padding: 15px;\n}\n#app header nav .header-text {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: stretch;\n}\n#app header nav .header-text .logo {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 1rem;\n  cursor: pointer;\n}\n#app header nav .header-text .logo:before,\n#app header nav .header-text .logo:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .logo:after {\n  clear: both;\n}\n@media screen and (max-width: 600px) {\n  #app header nav .header-text .logo {\n    font-size: 0.7rem;\n  }\n}\n#app header nav .header-text .page-title {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 20px;\n  flex-grow: 1;\n  flex-shrink: 0;\n  flex-basis: 100px;\n}\n#app header nav .header-text .page-title:before,\n#app header nav .header-text .page-title:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .page-title:after {\n  clear: both;\n}\n/*        width 25% */\n/*\n        @media screen and (max-width: 600px)\n          font-size 0.9rem\n          width 25%\n          */\n.links {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 50%;\n  margin-right: 0%;\n}\n.links:before,\n.links:after {\n  content: '';\n  display: table;\n}\n.links:after {\n  clear: both;\n}\n.links * {\n  font-size: 1.3rem;\n  margin-left: 0.1rem;\n  margin-top: 0.1rem;\n  flex-grow: 2;\n  flex-shrink: 0;\n  flex-basis: 200px;\n}\n.links .nav-anchor {\n  display: block;\n  font-size: 1rem;\n/*\n          @media screen and (max-width: 600px)\n            font-size 0.7rem\n          */\n}\nmain {\n  padding-top: 75px;\n}\n.main-content {\n  background-color: rgba(71,5,24,0.4);\n}\n.button {\n  outline: none;\n  border: none;\n  border-radius: 2px;\n  background-color: #27279e;\n  color: #fff;\n  text-transform: uppercase;\n  text-align: center;\n  min-width: 88px;\n  min-height: 36px;\n  overflow: hidden;\n  user-select: none;\n  vertical-align: middle;\n  position: relative;\n  padding: 0px 6px;\n  white-space: nowrap;\n  cursor: pointer;\n  font-weight: 500;\n  user-select: none;\n  font-size: 1.5rem;\n  line-height: 30px;\n}\n.button[disabled],\n.button.disabled,\n.button :disabled {\n  background-color: #fff !important;\n  color: rgba(0,0,0,0.26);\n  box-shadow: none !important;\n}\n.button.accent {\n  background-color: #1de9b6;\n}\n.button.fab {\n  width: 56px;\n  min-width: 0px;\n  background-clip: padding-box;\n  height: 56px;\n  line-height: 56px;\n  z-index: 20;\n  border-radius: 50%;\n}\n.button:active,\n.button:focus {\n  border: none;\n  outline: none;\n}\n.button.raised,\n.button.fab {\n  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n  transition: all 0.3s ease;\n}\n.button.raised:active,\n.button.fab:active {\n  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);\n}\nmain {\n  position: relative;\n  min-height: 400px;\n}\nmain [ui-view].ng-enter {\n  opacity: 0;\n  transform: scale3d(0.5, 0.5, 0.5);\n}\nmain [ui-view].ng-enter-active {\n  opacity: 1;\n  transform: scale3d(1, 1, 1);\n}\nmain [ui-view].ng-leave {\n  opacity: 1;\n  transform: translate3d(0, 0, 0);\n}\nmain [ui-view].ng-leave-active {\n  opacity: 0;\n  transform: translate3d(100px, 0, 0);\n}\nmain [ui-view].ng-enter,\nmain [ui-view].ng-leave {\n  position: absolute;\n  left: 0;\n  right: 0;\n  transition: all 0.5s ease-in-out;\n}\n", ""]);
+	exports.push([module.id, "html,\nbody {\n  height: 100%;\n}\nbody {\n  font-family: 'Roboto', sans-serif;\n  background-color: #efefef;\n}\nbody * {\n  box-sizing: border-box;\n}\na {\n  color: #fff;\n  text-decoration: none;\n}\na:visited {\n  color: #fff;\n}\na:hover,\na:active {\n  text-decoration: none;\n}\n#app header nav {\n  height: 75px;\n  background-color: #27279e;\n  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);\n  z-index: 99999;\n  position: fixed;\n  min-width: 100%;\n  padding: 15px;\n}\n#app header nav .header-text {\n  display: flex;\n  flex-direction: row;\n  justify-content: flex-start;\n  align-items: center;\n  align-content: stretch;\n}\n#app header nav .header-text .logo {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 16px;\n  cursor: pointer;\n}\n#app header nav .header-text .logo:before,\n#app header nav .header-text .logo:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .logo:after {\n  clear: both;\n}\n@media screen and (max-width: 700px) {\n  #app header nav .header-text .logo {\n    font-size: 12px;\n  }\n}\n#app header nav .header-text .page-title {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 0%;\n  margin-right: 0%;\n  color: #fff;\n  font-size: 25px;\n  flex-grow: 1;\n  flex-shrink: 0;\n  flex-basis: 100px;\n}\n#app header nav .header-text .page-title:before,\n#app header nav .header-text .page-title:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .page-title:after {\n  clear: both;\n}\n@media screen and (max-width: 700px) {\n  #app header nav .header-text .page-title {\n    font-size: 18px;\n  }\n}\n#app header nav .header-text .links {\n  *zoom: 1;\n  float: left;\n  clear: none;\n  text-align: inherit;\n  width: 12.5%;\n  margin-left: 50%;\n  margin-right: 0%;\n}\n#app header nav .header-text .links:before,\n#app header nav .header-text .links:after {\n  content: '';\n  display: table;\n}\n#app header nav .header-text .links:after {\n  clear: both;\n}\n#app header nav .header-text .links * {\n  font-size: 1.3rem;\n  margin-left: 0.1rem;\n  margin-top: 0.1rem;\n  flex-grow: 2;\n  flex-shrink: 0;\n  flex-basis: 200px;\n}\n#app header nav .header-text .links .nav-anchor {\n  display: block;\n  font-size: 14px;\n}\n@media screen and (max-width: 700px) {\n  #app header nav .header-text .links .nav-anchor {\n    font-size: 12px;\n  }\n}\n#app main {\n  padding-top: 75px;\n}\n.main-content {\n  background-color: rgba(71,5,24,0.4);\n}\n.button {\n  outline: none;\n  border: none;\n  border-radius: 2px;\n  background-color: #27279e;\n  color: #fff;\n  text-transform: uppercase;\n  text-align: center;\n  min-width: 88px;\n  min-height: 36px;\n  overflow: hidden;\n  user-select: none;\n  vertical-align: middle;\n  position: relative;\n  padding: 0px 6px;\n  white-space: nowrap;\n  cursor: pointer;\n  font-weight: 500;\n  user-select: none;\n  font-size: 1.5rem;\n  line-height: 30px;\n}\n.button[disabled],\n.button.disabled,\n.button :disabled {\n  background-color: #fff !important;\n  color: rgba(0,0,0,0.26);\n  box-shadow: none !important;\n}\n.button.accent {\n  background-color: #1de9b6;\n}\n.button.fab {\n  width: 56px;\n  min-width: 0px;\n  background-clip: padding-box;\n  height: 56px;\n  line-height: 56px;\n  z-index: 20;\n  border-radius: 50%;\n}\n.button:active,\n.button:focus {\n  border: none;\n  outline: none;\n}\n.button.raised,\n.button.fab {\n  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);\n  transition: all 0.3s ease;\n}\n.button.raised:active,\n.button.fab:active {\n  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);\n}\nmain {\n  position: relative;\n  min-height: 400px;\n}\nmain [ui-view].ng-enter {\n  opacity: 0;\n  transform: scale3d(0.5, 0.5, 0.5);\n}\nmain [ui-view].ng-enter-active {\n  opacity: 1;\n  transform: scale3d(1, 1, 1);\n}\nmain [ui-view].ng-leave {\n  opacity: 1;\n  transform: translate3d(0, 0, 0);\n}\nmain [ui-view].ng-leave-active {\n  opacity: 0;\n  transform: translate3d(100px, 0, 0);\n}\nmain [ui-view].ng-enter,\nmain [ui-view].ng-leave {\n  position: absolute;\n  left: 0;\n  right: 0;\n  transition: all 0.5s ease-in-out;\n}\n", ""]);
 	
 	// exports
 
@@ -62782,8 +62782,8 @@
 	exports.messages = messages;
 	// let webservice_ext = ''; //uses server-side mongo db
 	var webservice_ext = '.json'; //uses local json file
-	var deployment_context = '/state-geo-quiz'; //deploy in Tomcat
-	// let deployment_context = ''; //deploy locally in dist folder
+	var deployment_context = '/state-geo-quiz'; //Java web service deployed in Tomcat
+	//let deployment_context = ''; //deploy locally in dist folder
 	
 	var webservice_url = {
 		states: deployment_context + "/states" + webservice_ext,
@@ -62958,7 +62958,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".adjacentQuiz {\n  position: relative;\n  height: 600px;\n  display: flex;\n  align-items: flex-start;\n  justify-content: center;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n.main-content,\nbackground-color alpha(content-bgcolor,\n40%),\na.cheatLink {\n  color: #00f;\n  margin-top: 3rem;\n  text-decoration: none;\n}\n.main-content:visited,\nbackground-color alpha(content-bgcolor:visited,\n40%):visited,\na.cheatLink:visited,\n.main-content color blue,\nbackground-color alpha(content-bgcolor color blue,\n40%) color blue,\na.cheatLink color blue,\n.main-content:hover,\nbackground-color alpha(content-bgcolor:hover,\n40%):hover,\na.cheatLink:hover,\n.main-content:active,\nbackground-color alpha(content-bgcolor:active,\n40%):active,\na.cheatLink:active {\n  text-decoration: none;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 100%;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-results-error {\n  color: #f00;\n}\n.quiz-results-success {\n  color: #008000;\n}\n", ""]);
+	exports.push([module.id, "section div h1 {\n  font-size: 25px;\n}\n.adjacentQuiz {\n  position: relative;\n  height: 600px;\n  display: flex;\n  align-items: flex-start;\n  justify-content: center;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n.main-content,\nbackground-color alpha(content-bgcolor,\n40%),\na.cheatLink {\n  color: #00f;\n  margin-top: 3rem;\n  text-decoration: none;\n}\n.main-content:visited,\nbackground-color alpha(content-bgcolor:visited,\n40%):visited,\na.cheatLink:visited,\n.main-content color blue,\nbackground-color alpha(content-bgcolor color blue,\n40%) color blue,\na.cheatLink color blue,\n.main-content:hover,\nbackground-color alpha(content-bgcolor:hover,\n40%):hover,\na.cheatLink:hover,\n.main-content:active,\nbackground-color alpha(content-bgcolor:active,\n40%):active,\na.cheatLink:active {\n  text-decoration: none;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 100%;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-results-error {\n  color: #f00;\n}\n.quiz-results-success {\n  color: #008000;\n}\n", ""]);
 	
 	// exports
 
@@ -63606,12 +63606,12 @@
 	    controller: _stateDropdownComponent.StateDropdownComponent,
 	    template: _stateDropdownHtml2['default'],
 	    controllerAs: 'vm',
-	    scope: {
+	    scope: {},
+	    replace: true,
+	    bindToController: {
 	      componentId: '@',
 	      componentLabel: '@'
 	    },
-	    replace: true,
-	    bindToController: true,
 	    restrict: 'E'
 	  };
 	};
@@ -63819,11 +63819,11 @@
 	    controller: _quizResultsMessageComponent.QuizResultsMessageComponent,
 	    template: _quizResultsMessageHtml2['default'],
 	    controllerAs: 'vm',
-	    scope: {
+	    scope: {},
+	    replace: true,
+	    bindToController: {
 	      resultsMessages: '=' //array of ResultsMessage objects
 	    },
-	    replace: true,
-	    bindToController: true,
 	    restrict: 'E'
 	  };
 	};
@@ -64245,11 +64245,11 @@
 	    controller: _picklistComponent.PicklistComponent,
 	    template: _picklistHtml2['default'],
 	    controllerAs: 'vm',
-	    scope: {
-	      selectedState: '='
-	    },
+	    scope: {},
 	    replace: true,
-	    bindToController: true, //assures that selectedState becomes a PicklistComponent property
+	    bindToController: {
+	      selectedState: '=' //selectedState becomes a PicklistComponent property
+	    },
 	    restrict: 'E'
 	  };
 	};
@@ -64257,13 +64257,12 @@
 	exports.picklistDirective = picklistDirective;
 	
 	var PicklistComponent = (function () {
-	  function PicklistComponent($scope, picklistService, stateService) {
+	  function PicklistComponent(picklistService, stateService) {
 	    var _this = this;
 	
 	    _classCallCheck(this, PicklistComponent);
 	
 	    this.greeting = 'Select state(s) from left list';
-	    this.scope = $scope;
 	    this.service = picklistService;
 	    this.stateService = stateService;
 	
@@ -64386,7 +64385,6 @@
 	        }
 	      } catch (error) {
 	        console.log("Error in checkSelected(): ", error);
-	        // this.scope.$parent.vm.successMessage = error.message;
 	        resultsMessages.push(new _quizResultsMessageResultsMessage.ResultsMessage('Error processing adjacent state selections: ', _quizResultsMessageResultsMessage.ResultsMessageType.failure, error.message));
 	      }
 	      this.setResultsMessages(resultsMessages);
@@ -64417,7 +64415,7 @@
 	  return PicklistComponent;
 	})();
 	
-	PicklistComponent.$inject = ['$scope', 'picklistService', 'stateService'];
+	PicklistComponent.$inject = ['picklistService', 'stateService'];
 	
 	exports.PicklistComponent = PicklistComponent;
 
