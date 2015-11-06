@@ -62958,7 +62958,7 @@
 	
 	
 	// module
-	exports.push([module.id, "section div h1 {\n  font-size: 25px;\n}\n.adjacentQuiz {\n  position: relative;\n  height: 600px;\n  display: flex;\n  align-items: flex-start;\n  justify-content: center;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n.main-content,\nbackground-color alpha(content-bgcolor,\n40%),\na.cheatLink {\n  color: #00f;\n  margin-top: 3rem;\n  text-decoration: none;\n}\n.main-content:visited,\nbackground-color alpha(content-bgcolor:visited,\n40%):visited,\na.cheatLink:visited,\n.main-content color blue,\nbackground-color alpha(content-bgcolor color blue,\n40%) color blue,\na.cheatLink color blue,\n.main-content:hover,\nbackground-color alpha(content-bgcolor:hover,\n40%):hover,\na.cheatLink:hover,\n.main-content:active,\nbackground-color alpha(content-bgcolor:active,\n40%):active,\na.cheatLink:active {\n  text-decoration: none;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 100%;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-results-error {\n  color: #f00;\n}\n.quiz-results-success {\n  color: #008000;\n}\n", ""]);
+	exports.push([module.id, "section div h1 {\n  font-size: 25px;\n}\n.adjacentQuiz {\n  position: relative;\n  height: 600px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: flex-start;\n  margin-left: 10px;\n  margin-right: 10px;\n}\n.main-content,\nbackground-color alpha(content-bgcolor,\n40%),\na.cheatLink {\n  color: #00f;\n  margin-top: 3rem;\n  text-decoration: none;\n}\n.main-content:visited,\nbackground-color alpha(content-bgcolor:visited,\n40%):visited,\na.cheatLink:visited,\n.main-content color blue,\nbackground-color alpha(content-bgcolor color blue,\n40%) color blue,\na.cheatLink color blue,\n.main-content:hover,\nbackground-color alpha(content-bgcolor:hover,\n40%):hover,\na.cheatLink:hover,\n.main-content:active,\nbackground-color alpha(content-bgcolor:active,\n40%):active,\na.cheatLink:active {\n  text-decoration: none;\n}\n.results-box {\n  position: relative;\n  border: 2px solid #808000;\n  margin-top: 1rem;\n  width: 100%;\n}\n.results-box-wrapper {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n.quiz-results-title {\n  font-size: 1.5rem;\n  font-weight: bold;\n  margin: 0.5rem;\n}\n.quiz-results {\n  margin-right: auto;\n  text-align: left;\n  margin: 1rem;\n}\n.quiz-results-error {\n  color: #f00;\n}\n.quiz-results-success {\n  color: #008000;\n}\n", ""]);
 	
 	// exports
 
@@ -64262,7 +64262,7 @@
 	
 	    _classCallCheck(this, PicklistComponent);
 	
-	    this.greeting = 'Select state(s) from left list';
+	    this.greeting = 'Select state(s) from left list and click on the right arrow to move to the right list';
 	    this.service = picklistService;
 	    this.stateService = stateService;
 	
@@ -64454,7 +64454,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".picklist {\n  position: relative;\n}\n.picklist-wrapper {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n}\n.picklist-item {\n  margin: 1rem;\n}\n.picklist-select {\n  min-width: 10rem;\n}\n.picklist-buttons {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.picklist-controls {\n  font-weight: bold;\n}\n", ""]);
+	exports.push([module.id, ".picklist {\n  position: relative;\n}\n.picklist .picklist-title {\n  margin-top: 1px;\n  margin-bottom: 1px;\n}\n.picklist-wrapper {\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n}\n.picklist-item {\n  margin: 1rem;\n}\n.picklist-select {\n  min-width: 10rem;\n}\n.picklist-buttons {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n.picklist-controls {\n  font-weight: bold;\n}\n", ""]);
 	
 	// exports
 
@@ -64463,7 +64463,7 @@
 /* 68 */
 /***/ function(module, exports) {
 
-	module.exports = "<section class=\"picklist\">\n<h3>{{ vm.greeting }}</h3>\n  <form novalidate>\n\t<div class=\"picklist-wrapper\">\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.leftSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.states\"></select>\n\t\t</div>\n\t\t<div class=\"picklist-buttons\">\t\n\t\t\t<button ng-click=\"vm.statePicked()\"><span class=\"picklist-controls\"> -&gt; </span></button>\n\t\t\t<button ng-click=\"vm.stateDeleted()\"><span class=\"picklist-controls\"> &lt;- </span></button>\n\t\t\t<button ng-click=\"vm.allStatesDeleted()\"><span class=\"picklist-controls\"> &lt;&lt;- </span></button>\n\t\t</div>\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.rightSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.rightSelections\"></select>\n\n\t\t</div>\n\t</div>\n\t<div class=\"\">\n\t\t<button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected States </button> \n\t</div> \n  </form>\n</section>\n"
+	module.exports = "<section class=\"picklist\">\n  <h4 class=\"picklist-title\">{{ vm.greeting }}</h4>\n  <form novalidate>\n\t<div class=\"picklist-wrapper\">\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.leftSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.states\"></select>\n\t\t</div>\n\t\t<div class=\"picklist-buttons\">\t\n\t\t\t<button ng-click=\"vm.statePicked()\"><span class=\"picklist-controls\"> -&gt; </span></button>\n\t\t\t<button ng-click=\"vm.stateDeleted()\"><span class=\"picklist-controls\"> &lt;- </span></button>\n\t\t\t<button ng-click=\"vm.allStatesDeleted()\"><span class=\"picklist-controls\"> &lt;&lt;- </span></button>\n\t\t</div>\n\t\t<div class=\"\">\t\n\t\t\t<select multiple=\"true\" ng-multiple=\"true\" class=\"picklist-item picklist-select\" \n\t\t\t\tng-model=\"vm.rightSelected\"\n\t\t\t\tng-options=\"state.name for state in vm.rightSelections\"></select>\n\n\t\t</div>\n\t</div>\n\t<div class=\"\">\n\t\t<button class=\"\" ng-click=\"vm.checkSelected()\"> Check Selected States </button> \n\t</div> \n  </form>\n</section>\n"
 
 /***/ }
 /******/ ]);
